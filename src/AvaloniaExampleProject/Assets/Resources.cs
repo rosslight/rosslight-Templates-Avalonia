@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 
 namespace AvaloniaExampleProject.Assets;
 
@@ -31,7 +32,16 @@ public partial class Resources : INotifyPropertyChanged
     /// <remarks> After subscription, the current value is published immediately </remarks>
     /// <param name="getter"> The getter for the resource </param>
     /// <returns> An observable that provides the current value of a resource </returns>
-    public IObservable<string> Observe(Func<Resources, string> getter) => new ResourcesObservable(this, getter);
+    public IObservable<string> Observe(Func<Resources, string> getter) =>
+        Observable.Create<string>(observer =>
+        {
+            CultureChangedDelegate handler = (_, _) => observer.OnNext(getter(this));
+
+            CultureChanged += handler;
+            observer.OnNext(getter(this));
+
+            return Disposable.Create((this, handler), static state => state.Item1.CultureChanged -= state.handler);
+        });
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -44,46 +54,5 @@ public partial class Resources : INotifyPropertyChanged
 
         /// <summary> German (Standard) </summary>
         public const string German = "de";
-    }
-}
-
-file sealed class ResourcesObservable : IObservable<string>
-{
-    private readonly Lock _lock = new();
-    private readonly List<IObserver<string>> _observers = [];
-    private string _currentString;
-
-    public ResourcesObservable(Resources resources, Func<Resources, string> getter)
-    {
-        _currentString = getter(resources);
-        resources.CultureChanged += (_, _) =>
-        {
-            _currentString = getter(resources);
-            lock (_lock)
-            {
-                for (int i = _observers.Count - 1; i >= 0; i--)
-                    _observers[i].OnNext(_currentString);
-            }
-        };
-    }
-
-    public IDisposable Subscribe(IObserver<string> observer)
-    {
-        lock (_lock)
-        {
-            observer.OnNext(_currentString);
-            _observers.Add(observer);
-        }
-
-        return Disposable.Create(
-            (this, observer),
-            static state =>
-            {
-                lock (state.Item1._lock)
-                {
-                    state.Item1._observers.Remove(state.observer);
-                }
-            }
-        );
     }
 }

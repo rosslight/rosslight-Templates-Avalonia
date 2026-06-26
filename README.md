@@ -25,7 +25,7 @@ This repository contains an example project which can be used to base new projec
   - Desktop applications used in the Industry were build with the same technologies
 - Opinionated toolset
   - [Microsoft Dependency Injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection) for DI
-  - [Microsoft Logging](https://learn.microsoft.com/en-us/dotnet/core/extensions/logging) for Logging
+  - [Serilog](https://github.com/serilog/serilog) for Logging
   - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) for ObservableProperties and Commands
   - [Darp.Utils.Dialog](https://github.com/rosslight/Darp.Utils/tree/main?tab=readme-ov-file#darputilsdialog) for MVVM compatible dialogs
   - [System.Text.Json](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview) with source generation for configuration files
