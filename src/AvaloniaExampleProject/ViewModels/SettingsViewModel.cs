@@ -22,6 +22,7 @@ public sealed partial class SettingsViewModel(
     IAppInformationService appInformationService,
     IAssetsFactory assetService,
     ILogExportService logExportService,
+    IStorageProviderAccessor storageProviderAccessor,
     ILogger logger
 ) : ViewModelBase
 {
@@ -32,6 +33,7 @@ public sealed partial class SettingsViewModel(
         Bootstrapper.AppDataAssets
     );
     private readonly ILogExportService _logExportService = logExportService;
+    private readonly IStorageProviderAccessor _storageProviderAccessor = storageProviderAccessor;
     private readonly ILogger _logger = logger.ForContext<SettingsViewModel>();
 
     public static LogEventLevel[] AvailableLogEvents { get; } =
@@ -89,7 +91,7 @@ public sealed partial class SettingsViewModel(
     {
         try
         {
-            var storageProvider = App.GetStorageProvider();
+            var storageProvider = _storageProviderAccessor.StorageProvider;
             var storageFile = await storageProvider.SaveFilePickerAsync(
                 new FilePickerSaveOptions { SuggestedFileName = CreateLogExportFileName() }
             );

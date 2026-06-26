@@ -34,6 +34,7 @@ public static class Bootstrapper
             .AddSingleton<IThemeService, ThemeService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAppInformationService, AppInformationService>()
+            .AddSingleton<IStorageProviderAccessor, MainWindowStorageProviderAccessor>()
             .AddSingleton<ILogExportService, LogExportService>()
             // Configure ViewModels
             .AddTransient<MainWindowViewModel>()
