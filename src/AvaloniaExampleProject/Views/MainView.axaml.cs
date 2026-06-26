@@ -7,18 +7,18 @@ using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
 using FluentAvalonia.UI.Navigation;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace AvaloniaExampleProject.Views;
 
 public sealed partial class MainView : UserControlBase<MainViewModel>
 {
-    private readonly ILogger<MainView> _logger;
+    private readonly ILogger _logger;
     private readonly FANavigationTransitionInfo _transitionInfo = new FASuppressNavigationTransitionInfo();
 
     public MainView(IServiceProvider serviceProvider)
     {
-        _logger = serviceProvider.GetRequiredService<ILogger<MainView>>();
+        _logger = serviceProvider.GetRequiredService<ILogger>().ForContext<MainView>();
         InitializeComponent();
         MainFrame.NavigationPageFactory = new DependencyInjectionPageFactory(serviceProvider);
     }
@@ -46,7 +46,7 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
 
     private void MainFrame_OnNavigationFailed(object sender, FANavigationFailedEventArgs e)
     {
-        _logger.LogError(
+        _logger.Error(
             e.Exception,
             "Navigation to {Type} has failed because of {Message}",
             e.SourcePageType,

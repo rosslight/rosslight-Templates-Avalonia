@@ -7,6 +7,9 @@ namespace AvaloniaExampleProject.Business;
 public interface IAppInformationService
 {
     string Version { get; }
+
+    /// <summary> The SessionId of the App. This should be the unique and constant for each instance of the app </summary>
+    string SessionId { get; }
 }
 
 public sealed class AppInformationService : IAppInformationService
@@ -22,4 +25,6 @@ public sealed class AppInformationService : IAppInformationService
             return field!;
         }
     }
+
+    public string SessionId { get; } = Guid.CreateVersion7().ToString("N");
 }

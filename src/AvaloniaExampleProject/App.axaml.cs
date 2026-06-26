@@ -3,10 +3,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform.Storage;
 using AvaloniaExampleProject.Views;
-using Darp.Utils.Avalonia;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace AvaloniaExampleProject;
 
@@ -31,6 +29,18 @@ public sealed class App : Application
         private set;
     }
 
+    /// <summary>
+    /// Gets the storage provider of the current application. This can be used for FilePicker operations or similar
+    /// </summary>
+    /// <returns> The storage provider </returns>
+    /// <exception cref="InvalidOperationException"> Thrown if the app was not started with a valid lifetime or is not initialized yet. </exception>
+    public static IStorageProvider GetStorageProvider()
+    {
+        if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { MainWindow: not null } desktop)
+            return desktop.MainWindow.StorageProvider;
+        throw new InvalidOperationException("Storage provider is not available! Could not find a desktop MainWindow");
+    }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -44,7 +54,6 @@ public sealed class App : Application
             this.AttachDeveloperTools(options =>
             {
                 options.Gesture = new KeyGesture(Key.F11);
-                options.AddMicrosoftLoggerObservable(Services.GetRequiredService<ILoggerFactory>());
             });
 #endif
             desktop.MainWindow = new MainWindow(Services);

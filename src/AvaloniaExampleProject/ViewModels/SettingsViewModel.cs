@@ -1,6 +1,7 @@
 using System.Globalization;
 using AsyncAwaitBestPractices;
 using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 using AvaloniaExampleProject.Assets;
 using AvaloniaExampleProject.Business;
 using AvaloniaExampleProject.Models;
@@ -8,7 +9,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Darp.Utils.Configuration;
 using Darp.Utils.Dialog;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace AvaloniaExampleProject.ViewModels;
 
@@ -17,13 +19,19 @@ public sealed partial class SettingsViewModel(
     IConfigurationService<MainConfig> configurationService,
     IDialogService dialogService,
     IAppInformationService appInformationService,
-    ILogger<SettingsViewModel> logger
+    ILogExportService logExportService,
+    ILogger logger
 ) : ViewModelBase
 {
     private readonly IConfigurationService<MainConfig> _configurationService = configurationService;
     private readonly IDialogService _dialogService = dialogService;
     private readonly IAppInformationService _appInformationService = appInformationService;
-    private readonly ILogger<SettingsViewModel> _logger = logger;
+    private readonly ILogExportService _logExportService = logExportService;
+    private readonly ILogger _logger = logger.ForContext<SettingsViewModel>();
+
+    public static LogEventLevel[] AvailableLogEvents { get; } =
+    [LogEventLevel.Verbose, LogEventLevel.Debug, LogEventLevel.Information];
+
     public Resources I18N { get; } = i18N;
     public IReadOnlyList<ThemeOption> ThemeOptions { get; } =
     [
@@ -33,6 +41,8 @@ public sealed partial class SettingsViewModel(
     ];
     public IObservable<string> AppVersion =>
         I18N.Observe(x => x.FormatSettings_About_Version(_appInformationService.Version));
+    public IObservable<string> AppSessionId =>
+        I18N.Observe(x => x.FormatSettings_About_SessionId(_appInformationService.SessionId));
 
     [ObservableProperty]
     public partial CultureInfo SelectedLanguage { get; set; } =
@@ -40,6 +50,9 @@ public sealed partial class SettingsViewModel(
 
     [ObservableProperty]
     public partial string SelectedTheme { get; set; } = configurationService.Config.UserPreferences.SelectedTheme;
+
+    [ObservableProperty]
+    public partial LogEventLevel SelectedLogEventLevel { get; set; } = configurationService.Config.Diagnostics.LogLevel;
 
     // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
     partial void OnSelectedLanguageChanged(CultureInfo value)
@@ -58,18 +71,28 @@ public sealed partial class SettingsViewModel(
         SaveConfig(c => c with { UserPreferences = c.UserPreferences with { SelectedTheme = value } });
     }
 
-    private void SaveConfig(Func<MainConfig, MainConfig> createConfig)
+    [RelayCommand]
+    private async Task ExportLogsAsync(CancellationToken cancellationToken)
     {
-        Task.Run(async () =>
-            {
-                var currentConfig = _configurationService.Config;
-                var newConfig = createConfig(currentConfig);
-                await _configurationService.WriteConfigurationAsync(newConfig);
-            })
-            .SafeFireAndForget(e =>
-                _logger.LogError(e, "Could not save configuration because of {Message}", e.Message)
+        try
+        {
+            var storageProvider = App.GetStorageProvider();
+            var storageFile = await storageProvider.SaveFilePickerAsync(
+                new FilePickerSaveOptions { SuggestedFileName = CreateLogExportFileName() }
             );
+            if (storageFile is null)
+                return;
+            await using var destinationStream = await storageFile.OpenWriteAsync();
+            await _logExportService.ExportAsync(destinationStream, cancellationToken);
+            _logger.Debug("Saved logs to {Path}", storageFile.Path);
+        }
+        catch (Exception e)
+        {
+            _logger.Error(e, "Could not save logs because of {Message}", e.Message);
+        }
     }
+
+    private static string CreateLogExportFileName() => $"AvaloniaExampleApp-logs-{DateTime.Now:yyyyMMdd}.zip";
 
     [RelayCommand]
     private async Task ShowLicensesDialogAsync(CancellationToken cancellationToken)
@@ -93,6 +116,17 @@ public sealed partial class SettingsViewModel(
         using var reader = new StreamReader(contentStream);
         string content = await reader.ReadToEndAsync(cancellationToken);
         await _dialogService.CreateMessageBoxDialog(title, content, true).ShowAsync(cancellationToken);
+    }
+
+    private void SaveConfig(Func<MainConfig, MainConfig> createConfig)
+    {
+        Task.Run(async () =>
+            {
+                var currentConfig = _configurationService.Config;
+                var newConfig = createConfig(currentConfig);
+                await _configurationService.WriteConfigurationAsync(newConfig);
+            })
+            .SafeFireAndForget(e => _logger.Error(e, "Could not save configuration because of {Message}", e.Message));
     }
 }
 

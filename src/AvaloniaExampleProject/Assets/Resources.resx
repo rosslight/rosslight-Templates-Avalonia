@@ -41,6 +41,18 @@
   <data name="Settings.ChangeTheme.SystemSettings" xml:space="preserve">
     <value>System settings</value>
   </data>
+  <data name="Settings.Diagnostics.Title" xml:space="preserve">
+    <value>Diagnostics</value>
+  </data>
+  <data name="Settings.LogLevel.Title" xml:space="preserve">
+    <value>Log level</value>
+  </data>
+  <data name="Settings.LogLevel.Description" xml:space="preserve">
+    <value>Change the minimum log level</value>
+  </data>
+  <data name="Settings.ExportLogs.Tooltip" xml:space="preserve">
+    <value>Export logs</value>
+  </data>
   <data name="Settings.Theme.Default" xml:space="preserve">
     <value>Default</value>
   </data>
@@ -70,6 +82,9 @@
   </data>
   <data name="Settings.About.Version" xml:space="preserve">
     <value>Version: {0}</value>
+  </data>
+  <data name="Settings.About.SessionId" xml:space="preserve">
+    <value>Session ID: {0}</value>
   </data>
   <data name="Welcome.ClickMe" xml:space="preserve">
     <value>Click me!</value>

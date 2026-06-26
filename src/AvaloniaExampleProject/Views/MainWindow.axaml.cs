@@ -10,16 +10,19 @@ using AvaloniaExampleProject.ViewModels;
 using Darp.Utils.Configuration;
 using FluentAvalonia.UI.Windowing;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace AvaloniaExampleProject.Views;
 
 public sealed partial class MainWindow : FAAppWindow
 {
     private readonly IServiceProvider _provider;
+    private readonly ILogger _logger;
 
     public MainWindow(IServiceProvider provider)
     {
         _provider = provider;
+        _logger = provider.GetRequiredService<ILogger>().ForContext<MainWindow>();
         InitializeComponent();
 
         DataContext = provider.GetRequiredService<MainWindowViewModel>();
@@ -46,6 +49,7 @@ public sealed partial class MainWindow : FAAppWindow
                 ViewModel = _provider.GetRequiredService<MainViewModel>(),
             };
         });
+        _logger.Information("AvaloniaExampleProject started!");
     }
 
     private void ConfigureTitleBar()

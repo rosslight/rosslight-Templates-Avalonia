@@ -6,13 +6,7 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Assets/**" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- Embed the repo-root changelog so the view model can load it via avares:// -->
-    <AvaloniaResource Include="..\..\CHANGELOG.md" Link="Assets/CHANGELOG.md" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AsyncAwaitBestPractices" />
     <PackageReference Include="Avalonia" />
@@ -30,11 +24,23 @@
     <PackageReference Include="Darp.Utils.ResxSourceGenerator" PrivateAssets="all" />
     <PackageReference Include="FluentAvaloniaUI" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Formatting.Compact" />
+    <PackageReference Include="Serilog.Sinks.Async" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="Assets/Resources.resx" Public="true" EmitFormatMethods="true" />
   </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets/**" />
+    <!-- Embed the repo-root changelog so the view model can load it via avares:// -->
+    <AvaloniaResource Include="..\..\CHANGELOG.md" Link="Assets/CHANGELOG.md" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="AvaloniaExampleProject.Tests" />
   </ItemGroup>

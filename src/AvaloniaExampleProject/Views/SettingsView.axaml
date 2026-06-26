@@ -6,7 +6,6 @@
     xmlns:vm="clr-namespace:AvaloniaExampleProject.ViewModels"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-    xmlns:views="clr-namespace:AvaloniaExampleProject.Views"
     xmlns:models="clr-namespace:AvaloniaExampleProject.Models"
     mc:Ignorable="d"
     d:DesignWidth="800"
@@ -26,6 +25,9 @@
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel MaxWidth="{StaticResource SettingsViewMaxWidth}" Margin="0,0,0,48" Spacing="8">
+            <!-- Personalization
+            This section contains UI specific configuration that does not change the behavior of the app
+            -->
             <TextBlock
                 Text="{CompiledBinding I18N.Settings_Personalization_Title}"
                 Theme="{StaticResource BodyStrongTextBlockStyle}"
@@ -73,6 +75,50 @@
                     </controls:FASettingsExpander.Footer>
                 </controls:FASettingsExpander>
             </StackPanel>
+
+            <!-- Diagnostics
+            This section contains settings necessary for debugging
+            -->
+            <TextBlock
+                Text="{CompiledBinding I18N.Settings_Diagnostics_Title}"
+                FontWeight="SemiBold"
+                Margin="0,16,0,0"
+            />
+            <controls:FASettingsExpander
+                Header="{CompiledBinding I18N.Settings_LogLevel_Title}"
+                Description="{CompiledBinding I18N.Settings_LogLevel_Description}"
+            >
+                <controls:FASettingsExpander.Footer>
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <ComboBox
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            MinWidth="{StaticResource SettingsViewContentWidth}"
+                            ItemsSource="{CompiledBinding AvailableLogEvents}"
+                            SelectedValue="{CompiledBinding SelectedLogEventLevel}"
+                        ></ComboBox>
+                        <Button
+                            Command="{CompiledBinding ExportLogsCommand}"
+                            Height="{StaticResource SettingsViewIconHeight}"
+                            Width="{StaticResource SettingsViewIconWidth}"
+                            Padding="0"
+                            ToolTip.Tip="{CompiledBinding I18N.Settings_ExportLogs_Tooltip}"
+                        >
+                            <Button.Content>
+                                <controls:FASymbolIcon
+                                    Symbol="SaveAs"
+                                    Height="{StaticResource SettingsViewIconFontSize}"
+                                    FontSize="{StaticResource SettingsViewIconFontSize}"
+                                />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </controls:FASettingsExpander.Footer>
+            </controls:FASettingsExpander>
+
+            <!-- About
+            This section contains informational material about the app only
+            -->
             <TextBlock
                 Text="{CompiledBinding I18N.Settings_About_Title}"
                 Theme="{StaticResource BodyStrongTextBlockStyle}"
@@ -100,6 +146,12 @@
                         Content="{CompiledBinding I18N.Settings_About_ChangelogTitle}"
                         Padding="0"
                         Command="{CompiledBinding ShowChangelogDialogCommand}"
+                    />
+                </controls:FASettingsExpanderItem>
+                <controls:FASettingsExpanderItem>
+                    <SelectableTextBlock
+                        Text="{CompiledBinding AppSessionId^}"
+                        Theme="{StaticResource CaptionTextBlockStyle}"
                     />
                 </controls:FASettingsExpanderItem>
             </controls:FASettingsExpander>
