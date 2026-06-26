@@ -1,26 +1,24 @@
 using Avalonia;
 using Avalonia.Controls;
+using AvaloniaExampleProject.Business;
 using AvaloniaExampleProject.Models;
 using AvaloniaExampleProject.ViewModels;
 using Darp.Utils.Avalonia;
 using FluentAvalonia.UI.Controls;
-using FluentAvalonia.UI.Media.Animation;
-using FluentAvalonia.UI.Navigation;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace AvaloniaExampleProject.Views;
 
 public sealed partial class MainView : UserControlBase<MainViewModel>
 {
-    private readonly ILogger _logger;
-    private readonly FANavigationTransitionInfo _transitionInfo = new FASuppressNavigationTransitionInfo();
+    private readonly IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigationService;
 
     public MainView(IServiceProvider serviceProvider)
     {
-        _logger = serviceProvider.GetRequiredService<ILogger>().ForContext<MainView>();
+        _serviceProvider = serviceProvider;
+        _navigationService = serviceProvider.GetRequiredService<INavigationService>();
         InitializeComponent();
-        MainFrame.NavigationPageFactory = new DependencyInjectionPageFactory(serviceProvider);
     }
 
     [Obsolete("Should by used by designer only!")]
@@ -34,35 +32,14 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
             NavView.SelectedItem = firstItem;
     }
 
-    private void TabStripControl_OnSelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
+    private async void TabStripControl_OnSelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
     {
         switch (e.SelectedItemContainer?.Tag)
         {
             case Type type:
-                MainFrame.Navigate(type, null, _transitionInfo);
+                var viewModel = (ViewModelBase)_serviceProvider.GetRequiredService(type);
+                await _navigationService.NavigateToAsync(viewModel);
                 break;
         }
     }
-
-    private void MainFrame_OnNavigationFailed(object sender, FANavigationFailedEventArgs e)
-    {
-        _logger.Error(
-            e.Exception,
-            "Navigation to {Type} has failed because of {Message}",
-            e.SourcePageType,
-            e.Exception.Message
-        );
-    }
-}
-
-file sealed class DependencyInjectionPageFactory(IServiceProvider serviceProvider) : IFANavigationPageFactory
-{
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-    public Control GetPage(Type srcType)
-    {
-        return new UserControl { Content = _serviceProvider.GetRequiredService(srcType) };
-    }
-
-    public Control GetPageFromObject(object target) => throw new NotSupportedException();
 }

@@ -50,6 +50,7 @@ public class TestAppBuilder
             )
             .AddConfigurationFile<MainConfig>(Bootstrapper.AppDataAssets, "config.json")
             .AddAppServices()
+            .AddSingleton<Serilog.ILogger>(Serilog.Core.Logger.None)
             .AddSingleton(appInformationService)
             .AddSingleton(new Resources())
             .BuildServiceProvider();

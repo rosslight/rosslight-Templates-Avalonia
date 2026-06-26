@@ -47,6 +47,6 @@
             />
         </controls:FANavigationView.FooterMenuItems>
 
-        <controls:FAFrame Name="MainFrame" NavigationFailed="MainFrame_OnNavigationFailed" Margin="12,8,12,8" />
+        <ContentControl Margin="12,8,12,8" Content="{CompiledBinding NavigationService.CurrentPage}" />
     </controls:FANavigationView>
 </UserControl>

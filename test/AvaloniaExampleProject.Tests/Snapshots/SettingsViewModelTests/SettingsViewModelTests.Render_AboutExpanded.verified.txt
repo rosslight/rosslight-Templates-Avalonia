@@ -17,142 +17,206 @@
           }
         },
         {
-          Type: StackPanel,
-          Spacing: 4.0,
-          Children: [
-            {
-              Type: FASettingsExpander,
-              Description: Change the language,
-              Footer: {
-                Type: ComboBox,
-                SelectedIndex: 0,
-                SelectedItem: en,
-                SelectedValue: en,
-                SelectedItems: [
-                  en
-                ],
-                Selection: {
-                  WritableSelectedItems: [
-                    en
-                  ],
-                  Source: [
-                    en,
-                    de
-                  ],
-                  SingleSelect: true,
-                  SelectedIndexes: [
-                    0
-                  ],
-                  SelectedItem: en,
-                  SelectedItems: [
-                    en
-                  ],
-                  Count: 1
-                },
-                SelectionMode: Single,
-                ItemsSource: [
-                  en,
-                  de
-                ],
-                ItemTemplate: {
-                  Content: {}
-                },
-                MinWidth: 128.0,
-                HorizontalAlignment: Center,
-                VerticalAlignment: Center
-              },
-              Header: Language
+          Type: FASettingsExpander,
+          Description: Change the language,
+          Footer: {
+            Type: ComboBox,
+            SelectedIndex: 0,
+            SelectedItem: en,
+            SelectedValue: en,
+            SelectedItems: [
+              en
+            ],
+            Selection: {
+              WritableSelectedItems: [
+                en
+              ],
+              Source: [
+                en,
+                de
+              ],
+              SingleSelect: true,
+              SelectedIndexes: [
+                0
+              ],
+              SelectedItem: en,
+              SelectedItems: [
+                en
+              ],
+              Count: 1
             },
-            {
-              Type: FASettingsExpander,
-              Description: Change the theme,
-              Footer: {
-                Type: ComboBox,
-                SelectedIndex: 0,
-                SelectedItem: {
+            SelectionMode: Single,
+            ItemsSource: [
+              en,
+              de
+            ],
+            ItemTemplate: {
+              Content: {}
+            },
+            MinWidth: 128.0,
+            HorizontalAlignment: Center,
+            VerticalAlignment: Center
+          },
+          Header: Language
+        },
+        {
+          Type: FASettingsExpander,
+          Description: Change the theme,
+          Footer: {
+            Type: ComboBox,
+            SelectedIndex: 0,
+            SelectedItem: {
+              Key: Default,
+              DisplayName: {}
+            },
+            SelectedValue: Default,
+            SelectedValueBinding: {
+              FallbackValue: {},
+              Path: {},
+              Source: {},
+              TargetNullValue: {}
+            },
+            SelectedItems: [
+              {
+                Key: Default,
+                DisplayName: {}
+              }
+            ],
+            Selection: {
+              WritableSelectedItems: [
+                {
+                  Key: Default,
+                  DisplayName: {}
+                }
+              ],
+              Source: [
+                {
                   Key: Default,
                   DisplayName: {}
                 },
-                SelectedValue: Default,
-                SelectedValueBinding: {
-                  FallbackValue: {},
-                  Path: {},
-                  Source: {},
-                  TargetNullValue: {}
+                {
+                  Key: Dark,
+                  DisplayName: {}
                 },
+                {
+                  Key: Light,
+                  DisplayName: {}
+                }
+              ],
+              SingleSelect: true,
+              SelectedIndexes: [
+                0
+              ],
+              SelectedItem: {
+                Key: Default,
+                DisplayName: {}
+              },
+              SelectedItems: [
+                {
+                  Key: Default,
+                  DisplayName: {}
+                }
+              ],
+              Count: 1
+            },
+            SelectionMode: Single,
+            ItemsSource: [
+              {
+                Key: Default,
+                DisplayName: {}
+              },
+              {
+                Key: Dark,
+                DisplayName: {}
+              },
+              {
+                Key: Light,
+                DisplayName: {}
+              }
+            ],
+            ItemTemplate: {
+              DataType: ThemeOption,
+              Content: {}
+            },
+            MinWidth: 128.0,
+            HorizontalAlignment: Center,
+            VerticalAlignment: Center
+          },
+          Header: Theme
+        },
+        {
+          Type: TextBlock,
+          FontWeight: DemiBold,
+          Text: Diagnostics,
+          Margin: 0,16,0,0
+        },
+        {
+          Type: FASettingsExpander,
+          Description: Change the minimum log level,
+          Footer: {
+            Type: StackPanel,
+            Spacing: 4.0,
+            Orientation: Horizontal,
+            Children: [
+              {
+                Type: ComboBox,
+                SelectedIndex: 2,
+                SelectedItem: Information,
                 SelectedItems: [
-                  {
-                    Key: Default,
-                    DisplayName: {}
-                  }
+                  Information
                 ],
                 Selection: {
                   WritableSelectedItems: [
-                    {
-                      Key: Default,
-                      DisplayName: {}
-                    }
+                    Information
                   ],
                   Source: [
-                    {
-                      Key: Default,
-                      DisplayName: {}
-                    },
-                    {
-                      Key: Dark,
-                      DisplayName: {}
-                    },
-                    {
-                      Key: Light,
-                      DisplayName: {}
-                    }
+                    Verbose,
+                    Debug,
+                    Information
                   ],
                   SingleSelect: true,
+                  SelectedIndex: 2,
                   SelectedIndexes: [
-                    0
+                    2
                   ],
-                  SelectedItem: {
-                    Key: Default,
-                    DisplayName: {}
-                  },
+                  SelectedItem: Information,
                   SelectedItems: [
-                    {
-                      Key: Default,
-                      DisplayName: {}
-                    }
+                    Information
                   ],
+                  AnchorIndex: 2,
                   Count: 1
                 },
                 SelectionMode: Single,
                 ItemsSource: [
-                  {
-                    Key: Default,
-                    DisplayName: {}
-                  },
-                  {
-                    Key: Dark,
-                    DisplayName: {}
-                  },
-                  {
-                    Key: Light,
-                    DisplayName: {}
-                  }
+                  Verbose,
+                  Debug,
+                  Information
                 ],
-                ItemTemplate: {
-                  DataType: ThemeOption,
-                  Content: {}
-                },
                 MinWidth: 128.0,
                 HorizontalAlignment: Center,
                 VerticalAlignment: Center
               },
-              Header: Theme
-            }
-          ]
+              {
+                Type: Button,
+                Command: AvaloniaExampleProject.ViewModels.SettingsViewModel.ExportLogsAsync,
+                Content: {
+                  Type: FASymbolIcon,
+                  Symbol: SaveAs,
+                  FontSize: 16.0,
+                  Height: 16.0
+                },
+                Padding: 0,
+                Width: 32.0,
+                Height: 32.0
+              }
+            ]
+          },
+          Header: Log level
         },
         {
           Type: TextBlock,
           Text: About,
+          Margin: 0,16,0,0,
           Theme: {
             Type: ControlTheme
           }
@@ -176,14 +240,6 @@
   },
   FontFamily: Inter,
   DataContext: {
-    ThemeService: {
-      AvailableThemes: [
-        Default,
-        Dark,
-        Light
-      ],
-      RequestedThemeVariant: {}
-    },
     I18N: {Scrubbed},
     ThemeOptions: [
       {
@@ -200,8 +256,12 @@
       }
     ],
     AppVersion: {},
+    AppSessionId: {},
+    ConfigurationLocation: {},
     SelectedLanguage: en,
     SelectedTheme: Default,
+    SelectedLogEventLevel: Information,
+    ExportLogsCommand: AvaloniaExampleProject.ViewModels.SettingsViewModel.ExportLogsAsync,
     ShowLicensesDialogCommand: AvaloniaExampleProject.ViewModels.SettingsViewModel.ShowLicensesDialogAsync,
     ShowChangelogDialogCommand: AvaloniaExampleProject.ViewModels.SettingsViewModel.ShowChangelogDialogAsync
   }

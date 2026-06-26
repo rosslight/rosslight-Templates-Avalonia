@@ -32,6 +32,7 @@ public static class Bootstrapper
             .AddConfigurationFile<MainConfig>(AppDataAssets, "config.json", JsonContext.Default.MainConfig)
             .AddLocalization()
             .AddSingleton<IThemeService, ThemeService>()
+            .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAppInformationService, AppInformationService>()
             .AddSingleton<ILogExportService, LogExportService>()
             // Configure ViewModels

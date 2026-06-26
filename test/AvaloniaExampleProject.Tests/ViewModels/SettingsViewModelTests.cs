@@ -26,6 +26,7 @@ public class SettingsViewModelTests
             .AddMemoryAssetsService(Bootstrapper.AppDataAssets, "path/to/config")
             .AddConfigurationFile<MainConfig>(Bootstrapper.AppDataAssets, "config.json")
             .AddAppServices()
+            .AddSingleton(Serilog.Core.Logger.None)
             .AddLogging()
             .BuildServiceProvider();
         _configurationService = _services.GetRequiredService<IConfigurationService<MainConfig>>();
