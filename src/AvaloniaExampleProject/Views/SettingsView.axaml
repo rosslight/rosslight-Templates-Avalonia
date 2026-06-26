@@ -60,12 +60,13 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             MinWidth="{StaticResource SettingsViewContentWidth}"
-                            ItemsSource="{CompiledBinding ThemeService.AvailableThemes}"
+                            ItemsSource="{CompiledBinding ThemeOptions}"
+                            SelectedValueBinding="{CompiledBinding Key}"
                             SelectedValue="{CompiledBinding SelectedTheme}"
                         >
                             <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{CompiledBinding Converter={x:Static views:SettingsView.ThemeTranslationConverter}}" />
+                                <DataTemplate x:DataType="vm:ThemeOption">
+                                    <TextBlock Text="{CompiledBinding DisplayName^}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

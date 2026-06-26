@@ -69,37 +69,77 @@
               Footer: {
                 Type: ComboBox,
                 SelectedIndex: 0,
-                SelectedItem: Default,
+                SelectedItem: {
+                  Key: Default,
+                  DisplayName: {}
+                },
                 SelectedValue: Default,
+                SelectedValueBinding: {
+                  FallbackValue: {},
+                  Path: {},
+                  Source: {},
+                  TargetNullValue: {}
+                },
                 SelectedItems: [
-                  Default
+                  {
+                    Key: Default,
+                    DisplayName: {}
+                  }
                 ],
                 Selection: {
                   WritableSelectedItems: [
-                    Default
+                    {
+                      Key: Default,
+                      DisplayName: {}
+                    }
                   ],
                   Source: [
-                    Default,
-                    Dark,
-                    Light
+                    {
+                      Key: Default,
+                      DisplayName: {}
+                    },
+                    {
+                      Key: Dark,
+                      DisplayName: {}
+                    },
+                    {
+                      Key: Light,
+                      DisplayName: {}
+                    }
                   ],
                   SingleSelect: true,
                   SelectedIndexes: [
                     0
                   ],
-                  SelectedItem: Default,
+                  SelectedItem: {
+                    Key: Default,
+                    DisplayName: {}
+                  },
                   SelectedItems: [
-                    Default
+                    {
+                      Key: Default,
+                      DisplayName: {}
+                    }
                   ],
                   Count: 1
                 },
                 SelectionMode: Single,
                 ItemsSource: [
-                  Default,
-                  Dark,
-                  Light
+                  {
+                    Key: Default,
+                    DisplayName: {}
+                  },
+                  {
+                    Key: Dark,
+                    DisplayName: {}
+                  },
+                  {
+                    Key: Light,
+                    DisplayName: {}
+                  }
                 ],
                 ItemTemplate: {
+                  DataType: ThemeOption,
                   Content: {}
                 },
                 MinWidth: 128.0,
@@ -144,6 +184,20 @@
       RequestedThemeVariant: {}
     },
     I18N: {Scrubbed},
+    ThemeOptions: [
+      {
+        Key: Default,
+        DisplayName: {}
+      },
+      {
+        Key: Dark,
+        DisplayName: {}
+      },
+      {
+        Key: Light,
+        DisplayName: {}
+      }
+    ],
     AppVersion: {},
     SelectedLanguage: en,
     SelectedTheme: Default,

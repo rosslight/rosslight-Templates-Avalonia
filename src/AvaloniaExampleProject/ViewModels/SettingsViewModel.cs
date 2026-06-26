@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 namespace AvaloniaExampleProject.ViewModels;
 
 public sealed partial class SettingsViewModel(
-    IThemeService themeService,
     Resources i18N,
     IConfigurationService<MainConfig> configurationService,
     IDialogService dialogService,
@@ -25,9 +24,13 @@ public sealed partial class SettingsViewModel(
     private readonly IDialogService _dialogService = dialogService;
     private readonly IAppInformationService _appInformationService = appInformationService;
     private readonly ILogger<SettingsViewModel> _logger = logger;
-
-    public IThemeService ThemeService { get; } = themeService;
     public Resources I18N { get; } = i18N;
+    public IReadOnlyList<ThemeOption> ThemeOptions { get; } =
+    [
+        new(ThemeService.DefaultTheme, i18N.Observe(x => x.Settings_Theme_Default)),
+        new(ThemeService.DarkTheme, i18N.Observe(x => x.Settings_Theme_Dark)),
+        new(ThemeService.LightTheme, i18N.Observe(x => x.Settings_Theme_Light)),
+    ];
     public IObservable<string> AppVersion =>
         I18N.Observe(x => x.FormatSettings_About_Version(_appInformationService.Version));
 
@@ -90,3 +93,5 @@ public sealed partial class SettingsViewModel(
         await _dialogService.CreateMessageBoxDialog(title, content, true).ShowAsync(cancellationToken);
     }
 }
+
+public sealed record ThemeOption(string Key, IObservable<string> DisplayName);
