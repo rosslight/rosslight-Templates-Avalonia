@@ -75,7 +75,9 @@ public sealed partial class SettingsViewModel(
     private async Task ShowLicensesDialogAsync(CancellationToken cancellationToken)
     {
         string title = I18N.Settings_About_LibrariesTitle;
-        await using var contentStream = AssetLoader.Open(new Uri("avares://AvaloniaExampleProject/Assets/NOTICE.md"));
+        await using var contentStream = AssetLoader.Open(
+            new Uri("avares://AvaloniaExampleProject/Assets/THIRD-PARTY-NOTICES.txt")
+        );
         using var reader = new StreamReader(contentStream);
         string content = await reader.ReadToEndAsync(cancellationToken);
         await _dialogService.CreateMessageBoxDialog(title, content, true).ShowAsync(cancellationToken);
