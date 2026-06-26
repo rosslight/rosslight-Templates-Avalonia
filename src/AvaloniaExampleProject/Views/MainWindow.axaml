@@ -1,4 +1,4 @@
-<windowing:AppWindow xmlns="https://github.com/avaloniaui"
+<windowing:FAAppWindow xmlns="https://github.com/avaloniaui"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,7 +14,8 @@
            Name="Self">
     <Grid RowDefinitions="Auto,*">
         <Grid Grid.Row="0" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" Background="Transparent"
-              Height="44" VerticalAlignment="Top" Margin="0,0,140,0">
+              Height="44" VerticalAlignment="Top" Margin="0,0,140,0"
+              WindowDecorationProperties.ElementRole="TitleBar">
             <Image Grid.Column="0" Margin="12,4,12,4" Width="18" Height="18"
                    IsHitTestVisible="False"
                    Source="/Assets/favicon.png" RenderOptions.BitmapInterpolationMode="HighQuality"/>
@@ -22,4 +23,4 @@
         </Grid>
         <UserControl Grid.Row="1" Name="WindowContent" />
     </Grid>
-</windowing:AppWindow>
+</windowing:FAAppWindow>

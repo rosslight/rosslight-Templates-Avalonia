@@ -54,7 +54,7 @@ public class SettingsViewModelTests
     {
         const string newTheme = ThemeService.LightTheme;
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configurationService.WriteConfigurationAsync(tempConfig);
+        await _configurationService.WriteConfigurationAsync(tempConfig, TestContext.Current.CancellationToken);
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var themeService = _services.GetRequiredService<IThemeService>();
 
@@ -72,7 +72,7 @@ public class SettingsViewModelTests
     {
         var newLanguage = CultureInfo.GetCultureInfo(Resources.Languages.German);
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configurationService.WriteConfigurationAsync(tempConfig);
+        await _configurationService.WriteConfigurationAsync(tempConfig, TestContext.Current.CancellationToken);
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var i18N = _services.GetRequiredService<Resources>();
         i18N.Culture = new CultureInfo(Resources.Languages.Default);

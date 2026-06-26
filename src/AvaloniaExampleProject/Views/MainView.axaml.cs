@@ -14,7 +14,7 @@ namespace AvaloniaExampleProject.Views;
 public sealed partial class MainView : UserControlBase<MainViewModel>
 {
     private readonly ILogger<MainView> _logger;
-    private readonly NavigationTransitionInfo _transitionInfo = new SuppressNavigationTransitionInfo();
+    private readonly FANavigationTransitionInfo _transitionInfo = new FASuppressNavigationTransitionInfo();
 
     public MainView(IServiceProvider serviceProvider)
     {
@@ -34,7 +34,7 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
             NavView.SelectedItem = firstItem;
     }
 
-    private void TabStripControl_OnSelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
+    private void TabStripControl_OnSelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
     {
         switch (e.SelectedItemContainer?.Tag)
         {
@@ -44,7 +44,7 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
         }
     }
 
-    private void MainFrame_OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+    private void MainFrame_OnNavigationFailed(object sender, FANavigationFailedEventArgs e)
     {
         _logger.LogError(
             e.Exception,
@@ -55,7 +55,7 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
     }
 }
 
-file sealed class DependencyInjectionPageFactory(IServiceProvider serviceProvider) : INavigationPageFactory
+file sealed class DependencyInjectionPageFactory(IServiceProvider serviceProvider) : IFANavigationPageFactory
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 

@@ -26,9 +26,9 @@
             <TextBlock Text="{CompiledBinding I18N.Settings_Personalization_Title}" 
                        Theme="{StaticResource BodyStrongTextBlockStyle}"/>
             <StackPanel Spacing="4">
-                <controls:SettingsExpander Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
+                <controls:FASettingsExpander Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
                                        Description="{CompiledBinding I18N.Settings_ChangeLanguage_Description}">
-                    <controls:SettingsExpander.Footer>
+                    <controls:FASettingsExpander.Footer>
                         <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center"
                                   MinWidth="{StaticResource SettingsViewContentWidth}"
                                   ItemsSource="{CompiledBinding I18N.AvailableCultures}"
@@ -39,11 +39,11 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                    </controls:SettingsExpander.Footer>
-                </controls:SettingsExpander>
-                <controls:SettingsExpander Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
+                    </controls:FASettingsExpander.Footer>
+                </controls:FASettingsExpander>
+                <controls:FASettingsExpander Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
                                            Description="{CompiledBinding I18N.Settings_ChangeTheme_Description}">
-                    <controls:SettingsExpander.Footer>
+                    <controls:FASettingsExpander.Footer>
                         <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center"
                                   MinWidth="{StaticResource SettingsViewContentWidth}"
                                   ItemsSource="{CompiledBinding ThemeService.AvailableThemes}"
@@ -54,27 +54,27 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                    </controls:SettingsExpander.Footer>
-                </controls:SettingsExpander>
+                    </controls:FASettingsExpander.Footer>
+                </controls:FASettingsExpander>
             </StackPanel>
             <TextBlock Text="{CompiledBinding I18N.Settings_About_Title}" 
                        Theme="{StaticResource BodyStrongTextBlockStyle}"/>
-            <controls:SettingsExpander Name="AboutSettingsExpander"
+            <controls:FASettingsExpander Name="AboutSettingsExpander"
                                        Header="{CompiledBinding I18N.App_Title}"
                                        Description="{CompiledBinding I18N.Settings_About_ByCompany}">
-                <controls:SettingsExpander.Footer>
+                <controls:FASettingsExpander.Footer>
                     <SelectableTextBlock Text="{CompiledBinding AppVersion^}"
                                          Theme="{StaticResource CaptionTextBlockStyle}"/>
-                </controls:SettingsExpander.Footer>
-                <controls:SettingsExpanderItem>
+                </controls:FASettingsExpander.Footer>
+                <controls:FASettingsExpanderItem>
                     <HyperlinkButton Content="{CompiledBinding I18N.Settings_About_LibrariesTitle}" Padding="0"
                                      Command="{CompiledBinding ShowLicensesDialogCommand}"/>
-                </controls:SettingsExpanderItem>
-                <controls:SettingsExpanderItem>
+                </controls:FASettingsExpanderItem>
+                <controls:FASettingsExpanderItem>
                     <HyperlinkButton Content="{CompiledBinding I18N.Settings_About_ChangelogTitle}" Padding="0"
                                      Command="{CompiledBinding ShowChangelogDialogCommand}"/>
-                </controls:SettingsExpanderItem>
-            </controls:SettingsExpander>
+                </controls:FASettingsExpanderItem>
+            </controls:FASettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

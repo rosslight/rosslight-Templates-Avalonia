@@ -8,6 +8,10 @@
         <Style Selector="SelectableTextBlock">
             <Setter Property="SelectionBrush" Value="{DynamicResource SystemAccentColor}"/>
         </Style>
+        <!-- Necessary for the TitleBar Buttons to extend to the desired height with FluentAvalonia v3-->
+        <Style Selector="WindowDrawnDecorations">
+            <Setter Property="DefaultTitleBarHeight" Value="44"/>
+        </Style>
     </Application.Styles>
 
     <Application.Resources>

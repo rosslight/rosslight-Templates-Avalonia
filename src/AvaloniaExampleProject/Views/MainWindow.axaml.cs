@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaExampleProject.Views;
 
-public sealed partial class MainWindow : AppWindow
+public sealed partial class MainWindow : FAAppWindow
 {
     private readonly IServiceProvider _provider;
 
@@ -51,7 +51,6 @@ public sealed partial class MainWindow : AppWindow
     private void ConfigureTitleBar()
     {
         TitleBar.ExtendsContentIntoTitleBar = true;
-        TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
         TitleBar.Height = 44;
 
         // Update colors
@@ -70,7 +69,7 @@ public sealed partial class MainWindow : AppWindow
             });
 }
 
-file sealed class MainAppSplashScreen(MainWindow owner) : IApplicationSplashScreen
+file sealed class MainAppSplashScreen(MainWindow owner) : IFAApplicationSplashScreen
 {
     private readonly MainWindow _owner = owner;
 

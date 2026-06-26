@@ -23,7 +23,7 @@ public class TestAppBuilder
     public static void Init()
     {
         VerifyImageMagick.RegisterComparers(0.1);
-        VerifyAvalonia.AddAvaloniaConvertersForAssemblyOfType<NavigationView>();
+        VerifyAvalonia.AddAvaloniaConvertersForAssemblyOfType<FANavigationView>();
         VerifierSettings.InitializePlugins();
     }
 

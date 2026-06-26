@@ -47,7 +47,6 @@ public sealed class App : Application
                 options.AddMicrosoftLoggerObservable(Services.GetRequiredService<ILoggerFactory>());
             });
 #endif
-            AvaloniaHelpers.DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow(Services);
         }
 

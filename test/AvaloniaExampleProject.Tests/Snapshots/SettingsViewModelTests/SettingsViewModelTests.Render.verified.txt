@@ -21,7 +21,7 @@
           Spacing: 4.0,
           Children: [
             {
-              Type: SettingsExpander,
+              Type: FASettingsExpander,
               Description: Change the language,
               Footer: {
                 Type: ComboBox,
@@ -64,7 +64,7 @@
               Header: Language
             },
             {
-              Type: SettingsExpander,
+              Type: FASettingsExpander,
               Description: Change the theme,
               Footer: {
                 Type: ComboBox,
@@ -118,7 +118,7 @@
           }
         },
         {
-          Type: SettingsExpander,
+          Type: FASettingsExpander,
           Description: By rosslight GmbH,
           Footer: {
             Type: SelectableTextBlock,

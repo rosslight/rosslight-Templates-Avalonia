@@ -9,32 +9,32 @@
              x:Class="AvaloniaExampleProject.Views.MainView"
              x:DataType="vm:MainViewModel"
              Design.DataContext="{x:Static models:DesignData.MainViewModel}">
-    <controls:NavigationView Name="NavView"
+    <controls:FANavigationView Name="NavView"
                              IsSettingsVisible="False" IsPaneToggleButtonVisible="False"
                              SelectionFollowsFocus="True"
                              SelectedItem="Home"
                              CompactModeThresholdWidth="0"
                              SelectionChanged="TabStripControl_OnSelectionChanged">
-        <controls:NavigationView.Resources>
+        <controls:FANavigationView.Resources>
             <!-- Override this so content doesn't appear in the TitleBar area -->
             <Thickness x:Key="NavigationViewContentMargin">0,0,0,0</Thickness>
             <Thickness x:Key="NavigationViewMinimalContentMargin">0,0,0,0</Thickness>
             <!-- Override this so the header is shown correctly -->
             <Thickness x:Key="NavigationViewHeaderMargin">8,8,0,0</Thickness>
-        </controls:NavigationView.Resources>
-        <controls:NavigationView.Header>
-            <TextBlock Text="{CompiledBinding #NavView.((controls:NavigationViewItem)SelectedItem).Content}"/>
-        </controls:NavigationView.Header>
-        <controls:NavigationView.MenuItems>
-            <controls:NavigationViewItem IconSource="Home" Tag="{x:Type vm:WelcomeViewModel}"
+        </controls:FANavigationView.Resources>
+        <controls:FANavigationView.Header>
+            <TextBlock Text="{CompiledBinding #NavView.((controls:FANavigationViewItem)SelectedItem).Content}"/>
+        </controls:FANavigationView.Header>
+        <controls:FANavigationView.MenuItems>
+            <controls:FANavigationViewItem IconSource="Home" Tag="{x:Type vm:WelcomeViewModel}"
                                          Content="{CompiledBinding I18N.Welcome_Title}" />
-        </controls:NavigationView.MenuItems>
-        <controls:NavigationView.FooterMenuItems>
-            <controls:NavigationViewItem IconSource="Settings" Tag="{x:Type vm:SettingsViewModel}"
+        </controls:FANavigationView.MenuItems>
+        <controls:FANavigationView.FooterMenuItems>
+            <controls:FANavigationViewItem IconSource="Settings" Tag="{x:Type vm:SettingsViewModel}"
                                          Content="{CompiledBinding I18N.Settings_Title}" />
-        </controls:NavigationView.FooterMenuItems>
+        </controls:FANavigationView.FooterMenuItems>
 
-        <controls:Frame Name="MainFrame" NavigationFailed="MainFrame_OnNavigationFailed"
-                        Margin="12,8,12,8"/>
-    </controls:NavigationView>
+        <controls:FAFrame Name="MainFrame" NavigationFailed="MainFrame_OnNavigationFailed"
+                          Margin="12,8,12,8"/>
+    </controls:FANavigationView>
 </UserControl>
