@@ -36,13 +36,13 @@
     <value>Diagnose</value>
   </data>
   <data name="Settings.LogLevel.Title" xml:space="preserve">
-    <value>Protokollstufe</value>
+    <value>Log Level</value>
   </data>
   <data name="Settings.LogLevel.Description" xml:space="preserve">
-    <value>Minimale Protokollstufe aendern</value>
+    <value>Minimales Log Level ändern</value>
   </data>
   <data name="Settings.ExportLogs.Tooltip" xml:space="preserve">
-    <value>Protokolle exportieren</value>
+    <value>Logs exportieren</value>
   </data>
   <data name="Settings.Personalization.Title" xml:space="preserve">
     <value>Personalisierung</value>
@@ -79,6 +79,9 @@
   </data>
   <data name="Settings.About.SessionId" xml:space="preserve">
     <value>Sitzungs-ID: {0}</value>
+  </data>
+  <data name="Settings.About.ConfigLocation" xml:space="preserve">
+    <value>Konfigurationsdatei: {0}</value>
   </data>
   <data name="Welcome.ClickMe.ResultsTitle" xml:space="preserve">
     <value>Ergebnis</value>

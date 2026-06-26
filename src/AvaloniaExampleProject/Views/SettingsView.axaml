@@ -32,57 +32,55 @@
                 Text="{CompiledBinding I18N.Settings_Personalization_Title}"
                 Theme="{StaticResource BodyStrongTextBlockStyle}"
             />
-            <StackPanel Spacing="4">
-                <controls:FASettingsExpander
-                    Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
-                    Description="{CompiledBinding I18N.Settings_ChangeLanguage_Description}"
-                >
-                    <controls:FASettingsExpander.Footer>
-                        <ComboBox
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            MinWidth="{StaticResource SettingsViewContentWidth}"
-                            ItemsSource="{CompiledBinding I18N.AvailableCultures}"
-                            SelectedValue="{CompiledBinding SelectedLanguage}"
-                        >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{CompiledBinding NativeName}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </controls:FASettingsExpander.Footer>
-                </controls:FASettingsExpander>
-                <controls:FASettingsExpander
-                    Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
-                    Description="{CompiledBinding I18N.Settings_ChangeTheme_Description}"
-                >
-                    <controls:FASettingsExpander.Footer>
-                        <ComboBox
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            MinWidth="{StaticResource SettingsViewContentWidth}"
-                            ItemsSource="{CompiledBinding ThemeOptions}"
-                            SelectedValueBinding="{CompiledBinding Key}"
-                            SelectedValue="{CompiledBinding SelectedTheme}"
-                        >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="vm:ThemeOption">
-                                    <TextBlock Text="{CompiledBinding DisplayName^}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </controls:FASettingsExpander.Footer>
-                </controls:FASettingsExpander>
-            </StackPanel>
+            <controls:FASettingsExpander
+                Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
+                Description="{CompiledBinding I18N.Settings_ChangeLanguage_Description}"
+            >
+                <controls:FASettingsExpander.Footer>
+                    <ComboBox
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        MinWidth="{StaticResource SettingsViewContentWidth}"
+                        ItemsSource="{CompiledBinding I18N.AvailableCultures}"
+                        SelectedValue="{CompiledBinding SelectedLanguage}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{CompiledBinding NativeName}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </controls:FASettingsExpander.Footer>
+            </controls:FASettingsExpander>
+            <controls:FASettingsExpander
+                Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
+                Description="{CompiledBinding I18N.Settings_ChangeTheme_Description}"
+            >
+                <controls:FASettingsExpander.Footer>
+                    <ComboBox
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        MinWidth="{StaticResource SettingsViewContentWidth}"
+                        ItemsSource="{CompiledBinding ThemeOptions}"
+                        SelectedValueBinding="{CompiledBinding Key}"
+                        SelectedValue="{CompiledBinding SelectedTheme}"
+                    >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ThemeOption">
+                                <TextBlock Text="{CompiledBinding DisplayName^}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </controls:FASettingsExpander.Footer>
+            </controls:FASettingsExpander>
 
             <!-- Diagnostics
             This section contains settings necessary for debugging
             -->
             <TextBlock
+                Margin="0,16,0,0"
                 Text="{CompiledBinding I18N.Settings_Diagnostics_Title}"
                 FontWeight="SemiBold"
-                Margin="0,16,0,0"
             />
             <controls:FASettingsExpander
                 Header="{CompiledBinding I18N.Settings_LogLevel_Title}"
@@ -96,7 +94,7 @@
                             MinWidth="{StaticResource SettingsViewContentWidth}"
                             ItemsSource="{CompiledBinding AvailableLogEvents}"
                             SelectedValue="{CompiledBinding SelectedLogEventLevel}"
-                        ></ComboBox>
+                        />
                         <Button
                             Command="{CompiledBinding ExportLogsCommand}"
                             Height="{StaticResource SettingsViewIconHeight}"
@@ -120,6 +118,7 @@
             This section contains informational material about the app only
             -->
             <TextBlock
+                Margin="0,16,0,0"
                 Text="{CompiledBinding I18N.Settings_About_Title}"
                 Theme="{StaticResource BodyStrongTextBlockStyle}"
             />
@@ -151,6 +150,12 @@
                 <controls:FASettingsExpanderItem>
                     <SelectableTextBlock
                         Text="{CompiledBinding AppSessionId^}"
+                        Theme="{StaticResource CaptionTextBlockStyle}"
+                    />
+                </controls:FASettingsExpanderItem>
+                <controls:FASettingsExpanderItem>
+                    <SelectableTextBlock
+                        Text="{CompiledBinding ConfigurationLocation^}"
                         Theme="{StaticResource CaptionTextBlockStyle}"
                     />
                 </controls:FASettingsExpanderItem>

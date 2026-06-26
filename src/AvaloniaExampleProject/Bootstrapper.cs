@@ -55,7 +55,7 @@ public static class Bootstrapper
             >();
             var appInfoService = provider.GetRequiredService<IAppInformationService>();
 
-            string logDirectory = Path.Join(appDataAssets.BasePath, "logs");
+            string logDirectory = LogExportService.GetLogDirectory(appDataAssets);
             var loggingLevelSwitch = new LoggingLevelSwitch(configService.Config.Diagnostics.LogLevel);
             _ = configService.Observe(x => x.Diagnostics.LogLevel).Subscribe(x => loggingLevelSwitch.MinimumLevel = x);
 

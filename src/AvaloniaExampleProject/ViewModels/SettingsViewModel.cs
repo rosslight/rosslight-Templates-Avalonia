@@ -7,6 +7,7 @@ using AvaloniaExampleProject.Business;
 using AvaloniaExampleProject.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Darp.Utils.Assets;
 using Darp.Utils.Configuration;
 using Darp.Utils.Dialog;
 using Serilog;
@@ -19,6 +20,7 @@ public sealed partial class SettingsViewModel(
     IConfigurationService<MainConfig> configurationService,
     IDialogService dialogService,
     IAppInformationService appInformationService,
+    IAssetsFactory assetService,
     ILogExportService logExportService,
     ILogger logger
 ) : ViewModelBase
@@ -26,6 +28,9 @@ public sealed partial class SettingsViewModel(
     private readonly IConfigurationService<MainConfig> _configurationService = configurationService;
     private readonly IDialogService _dialogService = dialogService;
     private readonly IAppInformationService _appInformationService = appInformationService;
+    private readonly IReadOnlyAssetsService _appDataService = assetService.GetReadOnlyAssets(
+        Bootstrapper.AppDataAssets
+    );
     private readonly ILogExportService _logExportService = logExportService;
     private readonly ILogger _logger = logger.ForContext<SettingsViewModel>();
 
@@ -43,6 +48,8 @@ public sealed partial class SettingsViewModel(
         I18N.Observe(x => x.FormatSettings_About_Version(_appInformationService.Version));
     public IObservable<string> AppSessionId =>
         I18N.Observe(x => x.FormatSettings_About_SessionId(_appInformationService.SessionId));
+    public IObservable<string> ConfigurationLocation =>
+        I18N.Observe(x => x.FormatSettings_About_ConfigLocation($"{_appDataService.BasePath}/config.json"));
 
     [ObservableProperty]
     public partial CultureInfo SelectedLanguage { get; set; } =
@@ -69,6 +76,12 @@ public sealed partial class SettingsViewModel(
         if (value is null)
             return;
         SaveConfig(c => c with { UserPreferences = c.UserPreferences with { SelectedTheme = value } });
+    }
+
+    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+    partial void OnSelectedLogEventLevelChanged(LogEventLevel value)
+    {
+        SaveConfig(c => c with { Diagnostics = new DiagnosticsConfig(LogLevel: value) });
     }
 
     [RelayCommand]
@@ -124,7 +137,13 @@ public sealed partial class SettingsViewModel(
             {
                 var currentConfig = _configurationService.Config;
                 var newConfig = createConfig(currentConfig);
+                if (currentConfig == newConfig)
+                    return;
                 await _configurationService.WriteConfigurationAsync(newConfig);
+                _logger
+                    .ForContext("OldConfig", currentConfig)
+                    .ForContext("NewConfig", newConfig)
+                    .Verbose("Saved new configuration");
             })
             .SafeFireAndForget(e => _logger.Error(e, "Could not save configuration because of {Message}", e.Message));
     }
