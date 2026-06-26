@@ -1,8 +1,10 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+>
     <!-- Overwrite background of SplashScreen-->
-    <SolidColorBrush x:Key="CoreSplashScreenBackgroundApp" Color="{DynamicResource SolidBackgroundFillColorBase}"/>
+    <SolidColorBrush x:Key="CoreSplashScreenBackgroundApp" Color="{DynamicResource SolidBackgroundFillColorBase}" />
     <StaticResource x:Key="CoreSplashScreenBackground" ResourceKey="CoreSplashScreenBackgroundApp" />
     <system:Double x:Key="ContentDialogMaxWidth">1024</system:Double>
 </ResourceDictionary>

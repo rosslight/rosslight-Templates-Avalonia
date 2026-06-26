@@ -1,16 +1,20 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:AvaloniaExampleProject.ViewModels"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-             xmlns:views="clr-namespace:AvaloniaExampleProject.Views"
-             xmlns:models="clr-namespace:AvaloniaExampleProject.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaExampleProject.Views.SettingsView"
-             x:DataType="vm:SettingsViewModel"
-             Design.DataContext="{x:Static models:DesignData.SettingsViewModel}">
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:AvaloniaExampleProject.ViewModels"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+    xmlns:views="clr-namespace:AvaloniaExampleProject.Views"
+    xmlns:models="clr-namespace:AvaloniaExampleProject.Models"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="450"
+    x:Class="AvaloniaExampleProject.Views.SettingsView"
+    x:DataType="vm:SettingsViewModel"
+    Design.DataContext="{x:Static models:DesignData.SettingsViewModel}"
+>
     <UserControl.Resources>
         <system:Double x:Key="SettingsHeaderIconWidth">48</system:Double>
         <system:Double x:Key="SettingsHeaderIconFontSize">24</system:Double>
@@ -21,33 +25,44 @@
         <system:Double x:Key="SettingsViewMaxWidth">1024</system:Double>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel MaxWidth="{StaticResource SettingsViewMaxWidth}"
-                    Margin="0,0,0,48" Spacing="8">
-            <TextBlock Text="{CompiledBinding I18N.Settings_Personalization_Title}" 
-                       Theme="{StaticResource BodyStrongTextBlockStyle}"/>
+        <StackPanel MaxWidth="{StaticResource SettingsViewMaxWidth}" Margin="0,0,0,48" Spacing="8">
+            <TextBlock
+                Text="{CompiledBinding I18N.Settings_Personalization_Title}"
+                Theme="{StaticResource BodyStrongTextBlockStyle}"
+            />
             <StackPanel Spacing="4">
-                <controls:FASettingsExpander Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
-                                       Description="{CompiledBinding I18N.Settings_ChangeLanguage_Description}">
+                <controls:FASettingsExpander
+                    Header="{CompiledBinding I18N.Settings_ChangeLanguage_Title}"
+                    Description="{CompiledBinding I18N.Settings_ChangeLanguage_Description}"
+                >
                     <controls:FASettingsExpander.Footer>
-                        <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  MinWidth="{StaticResource SettingsViewContentWidth}"
-                                  ItemsSource="{CompiledBinding I18N.AvailableCultures}"
-                                  SelectedValue="{CompiledBinding SelectedLanguage}">
+                        <ComboBox
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            MinWidth="{StaticResource SettingsViewContentWidth}"
+                            ItemsSource="{CompiledBinding I18N.AvailableCultures}"
+                            SelectedValue="{CompiledBinding SelectedLanguage}"
+                        >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{CompiledBinding NativeName}"/>
+                                    <TextBlock Text="{CompiledBinding NativeName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </controls:FASettingsExpander.Footer>
                 </controls:FASettingsExpander>
-                <controls:FASettingsExpander Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
-                                           Description="{CompiledBinding I18N.Settings_ChangeTheme_Description}">
+                <controls:FASettingsExpander
+                    Header="{CompiledBinding I18N.Settings_ChangeTheme_Title}"
+                    Description="{CompiledBinding I18N.Settings_ChangeTheme_Description}"
+                >
                     <controls:FASettingsExpander.Footer>
-                        <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  MinWidth="{StaticResource SettingsViewContentWidth}"
-                                  ItemsSource="{CompiledBinding ThemeService.AvailableThemes}"
-                                  SelectedValue="{CompiledBinding SelectedTheme}">
+                        <ComboBox
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            MinWidth="{StaticResource SettingsViewContentWidth}"
+                            ItemsSource="{CompiledBinding ThemeService.AvailableThemes}"
+                            SelectedValue="{CompiledBinding SelectedTheme}"
+                        >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{CompiledBinding Converter={x:Static views:SettingsView.ThemeTranslationConverter}}" />
@@ -57,25 +72,36 @@
                     </controls:FASettingsExpander.Footer>
                 </controls:FASettingsExpander>
             </StackPanel>
-            <TextBlock Text="{CompiledBinding I18N.Settings_About_Title}" 
-                       Theme="{StaticResource BodyStrongTextBlockStyle}"/>
-            <controls:FASettingsExpander Name="AboutSettingsExpander"
-                                       Header="{CompiledBinding I18N.App_Title}"
-                                       Description="{CompiledBinding I18N.Settings_About_ByCompany}">
+            <TextBlock
+                Text="{CompiledBinding I18N.Settings_About_Title}"
+                Theme="{StaticResource BodyStrongTextBlockStyle}"
+            />
+            <controls:FASettingsExpander
+                Name="AboutSettingsExpander"
+                Header="{CompiledBinding I18N.App_Title}"
+                Description="{CompiledBinding I18N.Settings_About_ByCompany}"
+            >
                 <controls:FASettingsExpander.Footer>
-                    <SelectableTextBlock Text="{CompiledBinding AppVersion^}"
-                                         Theme="{StaticResource CaptionTextBlockStyle}"/>
+                    <SelectableTextBlock
+                        Text="{CompiledBinding AppVersion^}"
+                        Theme="{StaticResource CaptionTextBlockStyle}"
+                    />
                 </controls:FASettingsExpander.Footer>
                 <controls:FASettingsExpanderItem>
-                    <HyperlinkButton Content="{CompiledBinding I18N.Settings_About_LibrariesTitle}" Padding="0"
-                                     Command="{CompiledBinding ShowLicensesDialogCommand}"/>
+                    <HyperlinkButton
+                        Content="{CompiledBinding I18N.Settings_About_LibrariesTitle}"
+                        Padding="0"
+                        Command="{CompiledBinding ShowLicensesDialogCommand}"
+                    />
                 </controls:FASettingsExpanderItem>
                 <controls:FASettingsExpanderItem>
-                    <HyperlinkButton Content="{CompiledBinding I18N.Settings_About_ChangelogTitle}" Padding="0"
-                                     Command="{CompiledBinding ShowChangelogDialogCommand}"/>
+                    <HyperlinkButton
+                        Content="{CompiledBinding I18N.Settings_About_ChangelogTitle}"
+                        Padding="0"
+                        Command="{CompiledBinding ShowChangelogDialogCommand}"
+                    />
                 </controls:FASettingsExpanderItem>
             </controls:FASettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
-
