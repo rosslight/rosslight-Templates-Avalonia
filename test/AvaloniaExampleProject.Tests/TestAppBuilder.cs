@@ -50,11 +50,17 @@ public class TestAppBuilder
             )
             .AddConfigurationFile<MainConfig>(Bootstrapper.AppDataAssets, "config.json")
             .AddAppServices()
-            .AddSingleton<Serilog.ILogger>(Serilog.Core.Logger.None)
+            .AddSingleton(Serilog.Core.Logger.None)
             .AddSingleton(appInformationService)
             .AddSingleton(new Resources())
             .BuildServiceProvider();
         Services = provider;
+        // Workaround to load the config file
+        _ = provider
+            .GetRequiredService<ConfigService<MainConfig>>()
+            .LoadConfigAsync(() => new MainConfig(), CancellationToken.None)
+            .GetAwaiter()
+            .GetResult();
         return AppBuilder
             .Configure(() => new App(provider))
             .UseSkia()

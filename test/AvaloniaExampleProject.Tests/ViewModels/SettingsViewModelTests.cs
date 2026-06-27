@@ -57,15 +57,14 @@ public class SettingsViewModelTests
     {
         const string newTheme = ThemeService.LightTheme;
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configAssetsService.SerializeJsonAsync(
-            _configurationService.Path,
-            tempConfig,
+        await _configurationService.LoadConfigAsync(
+            () => tempConfig,
             cancellationToken: TestContext.Current.CancellationToken
         );
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var themeService = _services.GetRequiredService<IThemeService>();
 
-        var themeTask = themeService.RequestedThemeVariant.FirstAsync().ToTask();
+        var themeTask = themeService.RequestedThemeVariant.Skip(1).FirstAsync().ToTask();
         viewModel.SelectedTheme = newTheme;
         var observedThemeVariant = await themeTask;
 
@@ -79,16 +78,19 @@ public class SettingsViewModelTests
     {
         var newLanguage = CultureInfo.GetCultureInfo(Resources.Languages.German);
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configAssetsService.SerializeJsonAsync(
-            _configurationService.Path,
-            tempConfig,
+        await _configurationService.LoadConfigAsync(
+            () => tempConfig,
             cancellationToken: TestContext.Current.CancellationToken
         );
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var i18N = _services.GetRequiredService<Resources>();
         i18N.Culture = new CultureInfo(Resources.Languages.Default);
 
-        var configTask = _configurationService.Observe(x => x.UserPreferences.SelectedLanguage).FirstAsync().ToTask();
+        var configTask = _configurationService
+            .Observe(x => x.UserPreferences.SelectedLanguage)
+            .Skip(1)
+            .FirstAsync()
+            .ToTask();
         viewModel.SelectedLanguage = newLanguage;
         string observedLanguage = await configTask;
 
