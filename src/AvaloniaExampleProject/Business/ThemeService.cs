@@ -10,13 +10,13 @@ public interface IThemeService
     IObservable<ThemeVariant> RequestedThemeVariant { get; }
 }
 
-public sealed class ThemeService(IConfigurationService<MainConfig> configurationService) : IThemeService
+public sealed class ThemeService(ConfigService<MainConfig> configurationService) : IThemeService
 {
     public const string DefaultTheme = "Default";
     public const string DarkTheme = "Dark";
     public const string LightTheme = "Light";
 
-    private readonly IConfigurationService<MainConfig> _configurationService = configurationService;
+    private readonly ConfigService<MainConfig> _configurationService = configurationService;
 
     public IReadOnlyList<string> AvailableThemes { get; } = [DefaultTheme, DarkTheme, LightTheme];
 

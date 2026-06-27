@@ -11,6 +11,7 @@ using Darp.Utils.Dialog.FluentAvalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
+using Serilog.Events;
 using Serilog.Formatting.Compact;
 
 namespace AvaloniaExampleProject;
@@ -52,13 +53,13 @@ public static class Bootstrapper
         return serviceCollection.AddSingleton<ILogger>(provider =>
         {
             var appDataAssets = provider.GetRequiredService<IAssetsFactory>().GetReadOnlyAssets(AppDataAssets);
-            IConfigurationService<MainConfig> configService = provider.GetRequiredService<
-                IConfigurationService<MainConfig>
-            >();
+            ConfigService<MainConfig> configService = provider.GetRequiredService<ConfigService<MainConfig>>();
             var appInfoService = provider.GetRequiredService<IAppInformationService>();
 
             string logDirectory = LogExportService.GetLogDirectory(appDataAssets);
-            var loggingLevelSwitch = new LoggingLevelSwitch(configService.Config.Diagnostics.LogLevel);
+            // Using a default level here. The config service is not loaded at this point in the program.
+            // After the config is loaded, the observable will be notified and the configured log level will be applied
+            var loggingLevelSwitch = new LoggingLevelSwitch();
             _ = configService.Observe(x => x.Diagnostics.LogLevel).Subscribe(x => loggingLevelSwitch.MinimumLevel = x);
 
             return new LoggerConfiguration()

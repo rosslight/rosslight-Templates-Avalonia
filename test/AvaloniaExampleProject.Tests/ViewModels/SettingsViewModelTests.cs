@@ -17,7 +17,8 @@ namespace AvaloniaExampleProject.Tests.ViewModels;
 
 public class SettingsViewModelTests
 {
-    private readonly IConfigurationService<MainConfig> _configurationService;
+    private readonly IAssetsService _configAssetsService;
+    private readonly ConfigService<MainConfig> _configurationService;
     private readonly ServiceProvider _services;
 
     public SettingsViewModelTests()
@@ -29,7 +30,8 @@ public class SettingsViewModelTests
             .AddSingleton(Serilog.Core.Logger.None)
             .AddLogging()
             .BuildServiceProvider();
-        _configurationService = _services.GetRequiredService<IConfigurationService<MainConfig>>();
+        _configAssetsService = _services.GetRequiredService<IAssetsFactory>().GetAssets(Bootstrapper.AppDataAssets);
+        _configurationService = _services.GetRequiredService<ConfigService<MainConfig>>();
     }
 
     [AvaloniaFact]
@@ -55,7 +57,11 @@ public class SettingsViewModelTests
     {
         const string newTheme = ThemeService.LightTheme;
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configurationService.WriteConfigurationAsync(tempConfig, TestContext.Current.CancellationToken);
+        await _configAssetsService.SerializeJsonAsync(
+            _configurationService.Path,
+            tempConfig,
+            cancellationToken: TestContext.Current.CancellationToken
+        );
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var themeService = _services.GetRequiredService<IThemeService>();
 
@@ -73,7 +79,11 @@ public class SettingsViewModelTests
     {
         var newLanguage = CultureInfo.GetCultureInfo(Resources.Languages.German);
         var tempConfig = new MainConfig(new UserPreferencesConfig("en", ThemeService.DarkTheme));
-        await _configurationService.WriteConfigurationAsync(tempConfig, TestContext.Current.CancellationToken);
+        await _configAssetsService.SerializeJsonAsync(
+            _configurationService.Path,
+            tempConfig,
+            cancellationToken: TestContext.Current.CancellationToken
+        );
         var viewModel = _services.GetRequiredService<SettingsViewModel>();
         var i18N = _services.GetRequiredService<Resources>();
         i18N.Culture = new CultureInfo(Resources.Languages.Default);

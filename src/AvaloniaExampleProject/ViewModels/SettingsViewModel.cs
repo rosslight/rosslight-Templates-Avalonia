@@ -17,7 +17,7 @@ namespace AvaloniaExampleProject.ViewModels;
 
 public sealed partial class SettingsViewModel(
     Resources i18N,
-    IConfigurationService<MainConfig> configurationService,
+    ConfigService<MainConfig> configurationService,
     IDialogService dialogService,
     IAppInformationService appInformationService,
     IAssetsFactory assetService,
@@ -26,7 +26,7 @@ public sealed partial class SettingsViewModel(
     ILogger logger
 ) : ViewModelBase
 {
-    private readonly IConfigurationService<MainConfig> _configurationService = configurationService;
+    private readonly ConfigService<MainConfig> _configurationService = configurationService;
     private readonly IDialogService _dialogService = dialogService;
     private readonly IAppInformationService _appInformationService = appInformationService;
     private readonly IReadOnlyAssetsService _appDataService = assetService.GetReadOnlyAssets(
@@ -137,15 +137,8 @@ public sealed partial class SettingsViewModel(
     {
         Task.Run(async () =>
             {
-                var currentConfig = _configurationService.Config;
-                var newConfig = createConfig(currentConfig);
-                if (currentConfig == newConfig)
-                    return;
-                await _configurationService.WriteConfigurationAsync(newConfig);
-                _logger
-                    .ForContext("OldConfig", currentConfig)
-                    .ForContext("NewConfig", newConfig)
-                    .Verbose("Saved new configuration");
+                var newConfig = await _configurationService.UpdateConfigAsync(createConfig);
+                _logger.ForContext("NewConfig", newConfig).Verbose("Saved new configuration");
             })
             .SafeFireAndForget(e => _logger.Error(e, "Could not save configuration because of {Message}", e.Message));
     }

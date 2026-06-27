@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Avalonia.Threading;
 using AvaloniaExampleProject.Assets;
 using AvaloniaExampleProject.Models;
 using AvaloniaExampleProject.ViewModels;
@@ -38,11 +37,16 @@ public sealed partial class MainWindow : FAAppWindow
 
     internal async Task LoadAsync(CancellationToken cancellationToken)
     {
-        var configurationService = _provider.GetRequiredService<IConfigurationService<MainConfig>>();
-        var config = await configurationService.LoadConfigurationAsync(cancellationToken);
+        // The first thing we should do is loading the config as most of the app's behavior depends on it
+        var configurationService = _provider.GetRequiredService<ConfigService<MainConfig>>();
+        var config = await configurationService.LoadConfigAsync(() => new MainConfig(), cancellationToken);
+
+        // Initialize config-dependent services
         var i18N = _provider.GetRequiredService<Resources>();
         i18N.Culture = new CultureInfo(config.UserPreferences.SelectedLanguage);
-        Dispatcher.UIThread.Invoke(() =>
+
+        // Create the MainView last. Run on the current dispatcher because the LoadAsync is initialized on the threadpool
+        Dispatcher.Invoke(() =>
         {
             WindowContent.Content = new MainView(_provider)
             {
