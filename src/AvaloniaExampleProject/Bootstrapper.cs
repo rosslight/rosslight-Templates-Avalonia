@@ -1,9 +1,10 @@
 using System.Globalization;
 using Avalonia.Controls;
 using AvaloniaExampleProject.Assets;
-using AvaloniaExampleProject.Business;
-using AvaloniaExampleProject.Models;
-using AvaloniaExampleProject.ViewModels;
+using AvaloniaExampleProject.Features.Settings;
+using AvaloniaExampleProject.Features.Welcome;
+using AvaloniaExampleProject.Services;
+using AvaloniaExampleProject.Shell;
 using Darp.Utils.Assets;
 using Darp.Utils.Configuration;
 using Darp.Utils.Dialog;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Formatting.Compact;
+using JsonContext = AvaloniaExampleProject.JsonContext;
 
 namespace AvaloniaExampleProject;
 
@@ -26,27 +28,21 @@ public static class Bootstrapper
             serviceCollection.AddMemoryAssetsService(AppDataAssets, "AvaloniaExampleProject");
         else
             serviceCollection.AddAppDataAssetsService(AppDataAssets, "AvaloniaExampleProject");
+
         serviceCollection
-            // Configure core services
-            .AddSingleton<IDialogService, AvaloniaDialogService>()
+            // Configure the config
             .AddConfigurationFile<MainConfig>(AppDataAssets, "config.json", JsonContext.Default.MainConfig)
-            .AddLocalization()
-            .AddSingleton<IThemeService, ThemeService>()
-            .AddSingleton<INavigationRegistry, NavigationRegistry>()
-            .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IAppInformationService, AppInformationService>()
-            .AddSingleton<IStorageProviderAccessor, MainWindowStorageProviderAccessor>()
-            .AddSingleton<ILogExportService, LogExportService>()
-            // Configure ViewModels
+            // Configure localization
+            .AddSingleton(Resources.Default)
+            // Configure common services
+            .AddCommonServices()
+            // Configure Features
             .AddTransient<MainWindowViewModel>()
             .AddTransient<MainViewModel>()
-            .AddTransient<WelcomeViewModel>()
-            .AddTransient<SettingsViewModel>();
+            .AddWelcomeFeature()
+            .AddSettingsFeature();
         return serviceCollection;
     }
-
-    private static IServiceCollection AddLocalization(this IServiceCollection serviceCollection) =>
-        serviceCollection.AddSingleton(Resources.Default);
 
     public static IServiceCollection AddSerilogLogging(this IServiceCollection serviceCollection)
     {

@@ -3,13 +3,13 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using AvaloniaExampleProject.Business;
-using AvaloniaExampleProject.Views;
+using AvaloniaExampleProject.Services;
+using AvaloniaExampleProject.Shell;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaExampleProject;
 
-public sealed class App : Application
+public sealed class App : Avalonia.Application
 {
     public App(IServiceProvider provider)
     {

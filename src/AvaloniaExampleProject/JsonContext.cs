@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using AvaloniaExampleProject.Models;
 
 namespace AvaloniaExampleProject;
 
