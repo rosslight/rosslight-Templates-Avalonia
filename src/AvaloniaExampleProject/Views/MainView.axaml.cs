@@ -1,29 +1,14 @@
 using Avalonia;
-using Avalonia.Controls;
 using AvaloniaExampleProject.Business;
-using AvaloniaExampleProject.Models;
 using AvaloniaExampleProject.ViewModels;
 using Darp.Utils.Avalonia;
 using FluentAvalonia.UI.Controls;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaExampleProject.Views;
 
 public sealed partial class MainView : UserControlBase<MainViewModel>
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly INavigationService _navigationService;
-
-    public MainView(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-        _navigationService = serviceProvider.GetRequiredService<INavigationService>();
-        InitializeComponent();
-    }
-
-    [Obsolete("Should by used by designer only!")]
-    public MainView()
-        : this(DesignData.Services) { }
+    public MainView() => InitializeComponent();
 
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
@@ -34,12 +19,7 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
 
     private async void TabStripControl_OnSelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
     {
-        switch (e.SelectedItemContainer?.Tag)
-        {
-            case Type type:
-                var viewModel = (ViewModelBase)_serviceProvider.GetRequiredService(type);
-                await _navigationService.NavigateToAsync(viewModel);
-                break;
-        }
+        if (e.SelectedItemContainer?.Tag is AppRoute route)
+            await ViewModel.NavigateCommand.ExecuteAsync(route);
     }
 }

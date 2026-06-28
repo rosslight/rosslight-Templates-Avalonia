@@ -48,7 +48,7 @@ public sealed partial class MainWindow : FAAppWindow
         // Create the MainView last. Run on the current dispatcher because the LoadAsync is initialized on the threadpool
         Dispatcher.Invoke(() =>
         {
-            WindowContent.Content = new MainView(_provider)
+            WindowContent.Content = new MainView
             {
                 ViewModel = _provider.GetRequiredService<MainViewModel>(),
             };

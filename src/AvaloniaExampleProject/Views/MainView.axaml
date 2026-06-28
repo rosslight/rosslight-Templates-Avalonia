@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:business="clr-namespace:AvaloniaExampleProject.Business"
     xmlns:vm="clr-namespace:AvaloniaExampleProject.ViewModels"
     xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     xmlns:models="clr-namespace:AvaloniaExampleProject.Models"
@@ -35,14 +36,14 @@
         <controls:FANavigationView.MenuItems>
             <controls:FANavigationViewItem
                 IconSource="Home"
-                Tag="{x:Type vm:WelcomeViewModel}"
+                Tag="{x:Static business:AppRoute.Welcome}"
                 Content="{CompiledBinding I18N.Welcome_Title}"
             />
         </controls:FANavigationView.MenuItems>
         <controls:FANavigationView.FooterMenuItems>
             <controls:FANavigationViewItem
                 IconSource="Settings"
-                Tag="{x:Type vm:SettingsViewModel}"
+                Tag="{x:Static business:AppRoute.Settings}"
                 Content="{CompiledBinding I18N.Settings_Title}"
             />
         </controls:FANavigationView.FooterMenuItems>

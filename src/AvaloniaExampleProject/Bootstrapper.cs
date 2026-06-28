@@ -11,7 +11,6 @@ using Darp.Utils.Dialog.FluentAvalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 using Serilog.Formatting.Compact;
 
 namespace AvaloniaExampleProject;
@@ -33,6 +32,7 @@ public static class Bootstrapper
             .AddConfigurationFile<MainConfig>(AppDataAssets, "config.json", JsonContext.Default.MainConfig)
             .AddLocalization()
             .AddSingleton<IThemeService, ThemeService>()
+            .AddSingleton<INavigationRegistry, NavigationRegistry>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAppInformationService, AppInformationService>()
             .AddSingleton<IStorageProviderAccessor, MainWindowStorageProviderAccessor>()

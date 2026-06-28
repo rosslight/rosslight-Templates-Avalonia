@@ -15,6 +15,30 @@ public enum NavigationResult
     NoOp,
 }
 
+public enum AppRoute
+{
+    Welcome,
+    Settings,
+}
+
+public interface INavigationRegistry
+{
+    ViewModelBase Create(AppRoute route);
+}
+
+public sealed class NavigationRegistry(IServiceProvider serviceProvider) : INavigationRegistry
+{
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+
+    public ViewModelBase Create(AppRoute route) =>
+        route switch
+        {
+            AppRoute.Welcome => _serviceProvider.GetRequiredService<WelcomeViewModel>(),
+            AppRoute.Settings => _serviceProvider.GetRequiredService<SettingsViewModel>(),
+            _ => throw new ArgumentOutOfRangeException(nameof(route), route, null),
+        };
+}
+
 /// <summary>
 /// A simple navigation service to navigate in a single-page application.
 /// Assumes that all navigation is async.
@@ -36,12 +60,11 @@ public interface INavigationService : INotifyPropertyChanged
     /// <summary> Resets the navigation history. </summary>
     void ResetNavigationHistory();
 
-    /// <summary> Navigate to a page of type TViewModel. The page will be resolved from the service provider. </summary>
+    /// <summary> Navigate to a page represented by an application route. </summary>
     /// <param name="cancellationToken"> The cancellationToken to cancel the navigation operation </param>
-    /// <typeparam name="TViewModel"> The type of the viewModel </typeparam>
+    /// <param name="route"> The route to navigate to </param>
     /// <returns> The result of the navigation </returns>
-    Task<NavigationResult> NavigateToAsync<TViewModel>(CancellationToken cancellationToken = default)
-        where TViewModel : ViewModelBase;
+    Task<NavigationResult> NavigateToAsync(AppRoute route, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Navigate to a specific page
@@ -58,10 +81,8 @@ public interface INavigationService : INotifyPropertyChanged
     /// </summary>
     /// <param name="page"> The page to navigate to </param>
     /// <param name="cancellationToken"> The cancellationToken to cancel the navigation operation </param>
-    /// <typeparam name="TViewModel"> The type of the viewModel </typeparam>
     /// <returns> The result of the navigation </returns>
-    Task<NavigationResult> NavigateToAsync<TViewModel>(TViewModel page, CancellationToken cancellationToken = default)
-        where TViewModel : ViewModelBase;
+    Task<NavigationResult> NavigateToAsync(ViewModelBase page, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Go back to the previous page.
@@ -94,12 +115,12 @@ public interface IAsyncNavigationAware
     Task OnNavigatingToAsync(CancellationToken cancellationToken);
 }
 
-public sealed partial class NavigationService(IServiceProvider serviceProvider, ILogger logger)
+public sealed partial class NavigationService(INavigationRegistry navigationRegistry, ILogger logger)
     : ObservableObject,
         INavigationService
 {
     private readonly Stack<NavigationEntry> _backStack = [];
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly INavigationRegistry _navigationRegistry = navigationRegistry;
     private readonly ILogger _logger = logger.ForContext<NavigationService>();
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
     private NavigationEntry? _currentEntry;
@@ -119,18 +140,14 @@ public sealed partial class NavigationService(IServiceProvider serviceProvider, 
         Dispatcher.UIThread.Invoke(() => OnPropertyChanged(nameof(CanGoBack)));
     }
 
-    public Task<NavigationResult> NavigateToAsync<TViewModel>(CancellationToken cancellationToken = default)
-        where TViewModel : ViewModelBase
+    public Task<NavigationResult> NavigateToAsync(AppRoute route, CancellationToken cancellationToken = default)
     {
-        ViewModelBase viewModel = (ViewModelBase)_serviceProvider.GetRequiredService(typeof(TViewModel));
-        return NavigateToInternalAsync(viewModel, cancellationToken);
+        ViewModelBase viewModel = _navigationRegistry.Create(route);
+        return NavigateToAsync(viewModel, cancellationToken);
     }
 
-    public Task<NavigationResult> NavigateToAsync<TViewModel>(
-        TViewModel page,
-        CancellationToken cancellationToken = default
-    )
-        where TViewModel : ViewModelBase => NavigateToInternalAsync(page, cancellationToken);
+    public Task<NavigationResult> NavigateToAsync(ViewModelBase page, CancellationToken cancellationToken = default) =>
+        NavigateToInternalAsync(page, cancellationToken);
 
     public async Task<NavigationResult> GoBackAsync(CancellationToken cancellationToken = default)
     {
