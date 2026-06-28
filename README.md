@@ -19,6 +19,9 @@ This repository contains an example project which can be used to base new projec
 - Personalization by default
   - Runtime switching of themes
   - Runtime switching of languages (using `.resx` and [source generation](https://github.com/rosslight/Darp.Utils/blob/main/src/Darp.Utils.ResxSourceGenerator/README.md))
+- Feature-oriented MVVM structure
+  - Feature-specific views, view models, and registrations live together
+  - Route-based shell navigation keeps navigation UI independent from concrete view model types
 - WinUI3 styling
   - Usage of [FluentAvalonia](https://github.com/amwx/FluentAvalonia) for WinUI3 styles and controls
 - Industry tested
@@ -29,6 +32,21 @@ This repository contains an example project which can be used to base new projec
   - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) for ObservableProperties and Commands
   - [Darp.Utils.Dialog](https://github.com/rosslight/Darp.Utils/tree/main?tab=readme-ov-file#darputilsdialog) for MVVM compatible dialogs
   - [System.Text.Json](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview) with source generation for configuration files
+
+## Project structure
+
+The app is organized by feature first, with a small set of app-wide folders:
+
+```text
+src/AvaloniaExampleProject/
+  Assets/    Global assets and localization resources
+  Features/  User-facing feature slices
+  Services/  App-wide services and runtime capabilities
+  Shell/     Main window, app shell, and design-time support
+  Styling/   Global Avalonia styling resources
+```
+
+Feature-specific UI, view models, and registrations live together under `Features/<FeatureName>/`. App-wide capabilities such as theming, logging, storage access, and navigation live under `Services/`.
 
 ## Preview
 
