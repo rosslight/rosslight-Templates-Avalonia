@@ -1,0 +1,66 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="using:AvaloniaExampleProject.Features.Dialogs"
+    xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+>
+    <Design.PreviewWith>
+        <dialogs:DialogShowcaseCard
+            Title="MessageBoxDialog"
+            Description="Show a clear status message after an action."
+            Icon="Message"
+            IconBrush="#0F78D4"
+            ButtonText="Run demo"
+        />
+    </Design.PreviewWith>
+
+    <Style Selector="dialogs|DialogShowcaseCard">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Width="252"
+                    Padding="20"
+                    CornerRadius="8"
+                    BorderThickness="1"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                >
+                    <StackPanel Spacing="0">
+                        <controls:FASymbolIcon
+                            HorizontalAlignment="Left"
+                            Height="36"
+                            FontSize="36"
+                            Symbol="{TemplateBinding Icon}"
+                            Foreground="{TemplateBinding IconBrush}"
+                        />
+
+                        <StackPanel Margin="0,18,0,20" Spacing="8">
+                            <TextBlock
+                                Text="{TemplateBinding Title}"
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                TextWrapping="Wrap"
+                            />
+                            <TextBlock
+                                Text="{TemplateBinding Description}"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                TextWrapping="Wrap"
+                            />
+                        </StackPanel>
+
+                        <Button
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding Command}"
+                        >
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <controls:FASymbolIcon Width="14" Height="14" FontSize="14" Symbol="Play" />
+                                <TextBlock Text="{TemplateBinding ButtonText}" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

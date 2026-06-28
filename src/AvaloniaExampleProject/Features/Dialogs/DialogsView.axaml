@@ -14,68 +14,13 @@
     x:DataType="vm:DialogsViewModel"
     Design.DataContext="{x:Static designTime:DesignData.DialogsViewModel}"
 >
+    <UserControl.Styles>
+        <StyleInclude Source="avares://AvaloniaExampleProject/Features/Dialogs/DialogShowcaseCard.axaml" />
+    </UserControl.Styles>
+
     <UserControl.Resources>
         <system:Double x:Key="DialogsViewMaxWidth">1056</system:Double>
         <system:Double x:Key="DialogsResultMaxWidth">1044</system:Double>
-        <system:Double x:Key="DialogsCardWidth">252</system:Double>
-        <system:Double x:Key="DialogsIconFontSize">36</system:Double>
-        <system:Double x:Key="DialogsButtonIconSize">14</system:Double>
-
-        <ControlTheme x:Key="{x:Type vm:DialogShowcaseCard}" TargetType="vm:DialogShowcaseCard">
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border
-                        Width="{StaticResource DialogsCardWidth}"
-                        Margin="0,0,12,12"
-                        Padding="20"
-                        CornerRadius="8"
-                        BorderThickness="1"
-                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                    >
-                        <StackPanel Spacing="0">
-                            <controls:FASymbolIcon
-                                HorizontalAlignment="Left"
-                                Height="{StaticResource DialogsIconFontSize}"
-                                FontSize="{StaticResource DialogsIconFontSize}"
-                                Symbol="{TemplateBinding Icon}"
-                                Foreground="{TemplateBinding IconBrush}"
-                            />
-
-                            <StackPanel Margin="0,18,0,20" Spacing="8">
-                                <TextBlock
-                                    Text="{TemplateBinding Title}"
-                                    FontSize="16"
-                                    FontWeight="SemiBold"
-                                    TextWrapping="Wrap"
-                                />
-                                <TextBlock
-                                    Text="{TemplateBinding Description}"
-                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                    TextWrapping="Wrap"
-                                />
-                            </StackPanel>
-
-                            <Button
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                Command="{TemplateBinding Command}"
-                            >
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <controls:FASymbolIcon
-                                        Width="{StaticResource DialogsButtonIconSize}"
-                                        Height="{StaticResource DialogsButtonIconSize}"
-                                        FontSize="{StaticResource DialogsButtonIconSize}"
-                                        Symbol="Play"
-                                    />
-                                    <TextBlock Text="{TemplateBinding ButtonText}" />
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -120,7 +65,7 @@
                 </Grid>
             </Border>
 
-            <WrapPanel ItemWidth="264">
+            <WrapPanel ItemWidth="264" ItemSpacing="12" LineSpacing="12">
                 <vm:DialogShowcaseCard
                     Title="{CompiledBinding I18N.Dialogs_MessageBox_Title}"
                     Description="{CompiledBinding I18N.Dialogs_MessageBox_Description}"

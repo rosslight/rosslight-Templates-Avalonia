@@ -22,6 +22,7 @@
     <PackageReference Include="Darp.Utils.Configuration" />
     <PackageReference Include="Darp.Utils.Dialog.FluentAvalonia" />
     <PackageReference Include="Darp.Utils.ResxSourceGenerator" PrivateAssets="all" />
+    <PackageReference Include="DynamicData" />
     <PackageReference Include="FluentAvaloniaUI" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Serilog" />

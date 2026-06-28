@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Darp.Utils.Dialog;
 using Darp.Utils.Dialog.DialogData;
+using DynamicData.Binding;
 
 namespace AvaloniaExampleProject.Features.Dialogs;
 
@@ -227,11 +228,7 @@ public sealed partial class DialogsViewModel : ViewModelBase
     }
 
     private static IObservable<bool> CreateEnabledObservable(ProjectDialogViewModel content) =>
-        new PropertyChangedObservable<ProjectDialogViewModel>(
-            content,
-            nameof(ProjectDialogViewModel.IsComplete),
-            x => x.IsComplete
-        );
+        content.WhenValueChanged(x => x.IsComplete);
 
     private ValidationResult? ValidateDisplayName(string? input) =>
         string.IsNullOrWhiteSpace(input)

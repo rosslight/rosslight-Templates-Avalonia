@@ -6,6 +6,8 @@ using Darp.Utils.Dialog.DialogData;
 
 namespace AvaloniaExampleProject.Features.Dialogs;
 
+public sealed record ProjectDialogResult(string Name, string Template, bool OpenAfterCreate);
+
 public sealed partial class ProjectDialogViewModel(Resources? i18N = null)
     : ViewModelBase,
         IDialogData<ProjectDialogResult>

@@ -17,6 +17,7 @@
     <PackageVersion Include="Darp.Utils.Configuration" Version="2.1.1" />
     <PackageVersion Include="Darp.Utils.Dialog.FluentAvalonia" Version="2.1.1" />
     <PackageVersion Include="Darp.Utils.ResxSourceGenerator" Version="2.1.1" />
+    <PackageVersion Include="DynamicData" Version="9.4.31" />
     <PackageVersion Include="FluentAvaloniaUI" Version="3.0.0" />
     <PackageVersion Include="MartinCostello.Logging.XUnit.v3" Version="0.7.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
