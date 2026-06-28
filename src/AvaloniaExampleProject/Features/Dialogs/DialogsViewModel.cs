@@ -1,12 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using Avalonia.Media;
 using AvaloniaExampleProject.Assets;
 using AvaloniaExampleProject.Shell;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Darp.Utils.Dialog;
 using Darp.Utils.Dialog.DialogData;
-using FluentAvalonia.UI.Controls;
 
 namespace AvaloniaExampleProject.Features.Dialogs;
 
@@ -20,101 +18,9 @@ public sealed partial class DialogsViewModel : ViewModelBase
         I18N = i18N;
         _dialogService = dialogService;
         LastResult = I18N.Dialogs_Result_Empty;
-        ShowcaseItems =
-        [
-            CreateItem(
-                I18N.Dialogs_MessageBox_Title,
-                I18N.Dialogs_MessageBox_Description,
-                FASymbol.Message,
-                "#0F78D4",
-                I18N.Dialogs_OpenButton,
-                ShowMessageBoxDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_SelectableMessage_Title,
-                I18N.Dialogs_SelectableMessage_Description,
-                FASymbol.Clipboard,
-                "#6B5DD3",
-                I18N.Dialogs_OpenButton,
-                ShowSelectableMessageBoxDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_Input_Title,
-                I18N.Dialogs_Input_Description,
-                FASymbol.Edit,
-                "#C95F00",
-                I18N.Dialogs_OpenButton,
-                ShowInputDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_UsernamePassword_Title,
-                I18N.Dialogs_UsernamePassword_Description,
-                FASymbol.ContactInfo,
-                "#238A3B",
-                I18N.Dialogs_OpenButton,
-                ShowUsernamePasswordDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_CustomInput_Title,
-                I18N.Dialogs_CustomInput_Description,
-                FASymbol.Page,
-                "#D16F00",
-                I18N.Dialogs_OpenButton,
-                ShowCustomInputDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_SecondaryAction_Title,
-                I18N.Dialogs_SecondaryAction_Description,
-                FASymbol.SaveAs,
-                "#476F00",
-                I18N.Dialogs_OpenButton,
-                ShowSecondaryActionDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_IsEnabled_Title,
-                I18N.Dialogs_IsEnabled_Description,
-                FASymbol.Accept,
-                "#008272",
-                I18N.Dialogs_OpenButton,
-                ShowIsEnabledDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_SyncValidation_Title,
-                I18N.Dialogs_SyncValidation_Description,
-                FASymbol.Permissions,
-                "#C19C00",
-                I18N.Dialogs_OpenButton,
-                ShowSyncValidationDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_AsyncValidation_Title,
-                I18N.Dialogs_AsyncValidation_Description,
-                FASymbol.Sync,
-                "#7657C8",
-                I18N.Dialogs_OpenButton,
-                ShowAsyncValidationDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_AutoClose_Title,
-                I18N.Dialogs_AutoClose_Description,
-                FASymbol.Clock,
-                "#2B7CD3",
-                I18N.Dialogs_OpenButton,
-                ShowAutoCloseDialogCommand
-            ),
-            CreateItem(
-                I18N.Dialogs_ForcedDecision_Title,
-                I18N.Dialogs_ForcedDecision_Description,
-                FASymbol.Cancel,
-                "#D83B01",
-                I18N.Dialogs_OpenButton,
-                ShowForcedDecisionDialogCommand
-            ),
-        ];
     }
 
     public Resources I18N { get; }
-    public IReadOnlyList<DialogShowcaseItem> ShowcaseItems { get; }
 
     [ObservableProperty]
     public partial string? LastResult { get; private set; }
@@ -326,15 +232,6 @@ public sealed partial class DialogsViewModel : ViewModelBase
             nameof(ProjectDialogViewModel.IsComplete),
             x => x.IsComplete
         );
-
-    private static DialogShowcaseItem CreateItem(
-        string title,
-        string description,
-        FASymbol icon,
-        string iconColor,
-        string buttonText,
-        IAsyncRelayCommand command
-    ) => new(title, description, icon, new SolidColorBrush(Color.Parse(iconColor)), buttonText, command);
 
     private ValidationResult? ValidateDisplayName(string? input) =>
         string.IsNullOrWhiteSpace(input)

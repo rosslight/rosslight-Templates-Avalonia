@@ -37,8 +37,13 @@ public sealed partial class MainView : UserControlBase<MainViewModel>
 
     private void NavigationService_OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(INavigationService.CurrentRoute) && ViewModel.NavigationService.CurrentRoute is { } route)
+        if (
+            e.PropertyName == nameof(INavigationService.CurrentRoute)
+            && ViewModel.NavigationService.CurrentRoute is { } route
+        )
+        {
             SelectRoute(route);
+        }
     }
 
     private void SelectRoute(AppRoute route)

@@ -20,6 +20,62 @@
         <system:Double x:Key="DialogsCardWidth">252</system:Double>
         <system:Double x:Key="DialogsIconFontSize">36</system:Double>
         <system:Double x:Key="DialogsButtonIconSize">14</system:Double>
+
+        <ControlTheme x:Key="{x:Type vm:DialogShowcaseCard}" TargetType="vm:DialogShowcaseCard">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border
+                        Width="{StaticResource DialogsCardWidth}"
+                        Margin="0,0,12,12"
+                        Padding="20"
+                        CornerRadius="8"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    >
+                        <StackPanel Spacing="0">
+                            <controls:FASymbolIcon
+                                HorizontalAlignment="Left"
+                                Height="{StaticResource DialogsIconFontSize}"
+                                FontSize="{StaticResource DialogsIconFontSize}"
+                                Symbol="{TemplateBinding Icon}"
+                                Foreground="{TemplateBinding IconBrush}"
+                            />
+
+                            <StackPanel Margin="0,18,0,20" Spacing="8">
+                                <TextBlock
+                                    Text="{TemplateBinding Title}"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    TextWrapping="Wrap"
+                                />
+                                <TextBlock
+                                    Text="{TemplateBinding Description}"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    TextWrapping="Wrap"
+                                />
+                            </StackPanel>
+
+                            <Button
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{TemplateBinding Command}"
+                            >
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <controls:FASymbolIcon
+                                        Width="{StaticResource DialogsButtonIconSize}"
+                                        Height="{StaticResource DialogsButtonIconSize}"
+                                        FontSize="{StaticResource DialogsButtonIconSize}"
+                                        Symbol="Play"
+                                    />
+                                    <TextBlock Text="{TemplateBinding ButtonText}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -64,66 +120,96 @@
                 </Grid>
             </Border>
 
-            <ItemsControl ItemsSource="{CompiledBinding ShowcaseItems}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel ItemWidth="264" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="vm:DialogShowcaseItem">
-                        <Border
-                            Width="{StaticResource DialogsCardWidth}"
-                            Margin="0,0,12,12"
-                            Padding="20"
-                            CornerRadius="8"
-                            BorderThickness="1"
-                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                        >
-                            <StackPanel Spacing="0">
-                                <controls:FASymbolIcon
-                                    HorizontalAlignment="Left"
-                                    Height="{StaticResource DialogsIconFontSize}"
-                                    FontSize="{StaticResource DialogsIconFontSize}"
-                                    Symbol="{CompiledBinding Icon}"
-                                    Foreground="{CompiledBinding IconBrush}"
-                                />
-
-                                <StackPanel Margin="0,18,0,20" Spacing="8">
-                                    <TextBlock
-                                        Text="{CompiledBinding Title}"
-                                        FontSize="16"
-                                        FontWeight="SemiBold"
-                                        TextWrapping="Wrap"
-                                    />
-                                    <TextBlock
-                                        Text="{CompiledBinding Description}"
-                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        TextWrapping="Wrap"
-                                    />
-                                </StackPanel>
-
-                                <Button
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    Command="{CompiledBinding Command}"
-                                >
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <controls:FASymbolIcon
-                                            Width="{StaticResource DialogsButtonIconSize}"
-                                            Height="{StaticResource DialogsButtonIconSize}"
-                                            FontSize="{StaticResource DialogsButtonIconSize}"
-                                            Symbol="Play"
-                                        />
-                                        <TextBlock Text="{CompiledBinding ButtonText}" />
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <WrapPanel ItemWidth="264">
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_MessageBox_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_MessageBox_Description}"
+                    Icon="Message"
+                    IconBrush="#0F78D4"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowMessageBoxDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_SelectableMessage_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_SelectableMessage_Description}"
+                    Icon="Clipboard"
+                    IconBrush="#6B5DD3"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowSelectableMessageBoxDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_Input_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_Input_Description}"
+                    Icon="Edit"
+                    IconBrush="#C95F00"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowInputDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_UsernamePassword_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_UsernamePassword_Description}"
+                    Icon="ContactInfo"
+                    IconBrush="#238A3B"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowUsernamePasswordDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_CustomInput_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_CustomInput_Description}"
+                    Icon="Page"
+                    IconBrush="#D16F00"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowCustomInputDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_SecondaryAction_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_SecondaryAction_Description}"
+                    Icon="SaveAs"
+                    IconBrush="#476F00"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowSecondaryActionDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_IsEnabled_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_IsEnabled_Description}"
+                    Icon="Accept"
+                    IconBrush="#008272"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowIsEnabledDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_SyncValidation_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_SyncValidation_Description}"
+                    Icon="Permissions"
+                    IconBrush="#C19C00"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowSyncValidationDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_AsyncValidation_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_AsyncValidation_Description}"
+                    Icon="Sync"
+                    IconBrush="#7657C8"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowAsyncValidationDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_AutoClose_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_AutoClose_Description}"
+                    Icon="Clock"
+                    IconBrush="#2B7CD3"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowAutoCloseDialogCommand}"
+                />
+                <vm:DialogShowcaseCard
+                    Title="{CompiledBinding I18N.Dialogs_ForcedDecision_Title}"
+                    Description="{CompiledBinding I18N.Dialogs_ForcedDecision_Description}"
+                    Icon="Cancel"
+                    IconBrush="#D83B01"
+                    ButtonText="{CompiledBinding I18N.Dialogs_OpenButton}"
+                    Command="{CompiledBinding ShowForcedDecisionDialogCommand}"
+                />
+            </WrapPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
