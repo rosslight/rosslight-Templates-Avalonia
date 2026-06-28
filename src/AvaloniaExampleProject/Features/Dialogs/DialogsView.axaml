@@ -65,7 +65,7 @@
                 </Grid>
             </Border>
 
-            <WrapPanel ItemWidth="264" ItemSpacing="12" LineSpacing="12">
+            <WrapPanel ItemWidth="264" LineSpacing="12">
                 <vm:DialogShowcaseCard
                     Title="{CompiledBinding I18N.Dialogs_MessageBox_Title}"
                     Description="{CompiledBinding I18N.Dialogs_MessageBox_Description}"

@@ -144,7 +144,7 @@
     <value>Advanced flows</value>
   </data>
   <data name="Dialogs.MessageBox.Title" xml:space="preserve">
-    <value>MessageBoxDialog</value>
+    <value>MessageBox Dialog</value>
   </data>
   <data name="Dialogs.MessageBox.Description" xml:space="preserve">
     <value>Show a clear status message after an action.</value>
@@ -195,7 +195,7 @@
     <value>Enter a display name.</value>
   </data>
   <data name="Dialogs.UsernamePassword.Title" xml:space="preserve">
-    <value>UsernamePasswordDialog</value>
+    <value>UsernamePassword Dialog</value>
   </data>
   <data name="Dialogs.UsernamePassword.Description" xml:space="preserve">
     <value>Use a guided credential prompt with separate steps.</value>

@@ -90,6 +90,7 @@
         },
         {
           Type: WrapPanel,
+          LineSpacing: 12.0,
           ItemWidth: 264.0,
           Children: [
             {

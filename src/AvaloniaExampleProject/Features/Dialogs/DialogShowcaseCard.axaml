@@ -6,6 +6,7 @@
 >
     <Design.PreviewWith>
         <dialogs:DialogShowcaseCard
+            Height="500"
             Title="MessageBoxDialog"
             Description="Show a clear status message after an action."
             Icon="Message"
@@ -25,32 +26,44 @@
                     BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                     Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
                 >
-                    <StackPanel Spacing="0">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*">
                         <controls:FASymbolIcon
+                            Grid.Row="0"
+                            Grid.Column="0"
                             HorizontalAlignment="Left"
                             Height="36"
                             FontSize="36"
                             Symbol="{TemplateBinding Icon}"
                             Foreground="{TemplateBinding IconBrush}"
                         />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="8,0,8,0"
+                            VerticalAlignment="Center"
+                            Text="{TemplateBinding Title}"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            TextWrapping="Wrap"
+                        />
 
-                        <StackPanel Margin="0,18,0,20" Spacing="8">
-                            <TextBlock
-                                Text="{TemplateBinding Title}"
-                                FontSize="16"
-                                FontWeight="SemiBold"
-                                TextWrapping="Wrap"
-                            />
-                            <TextBlock
-                                Text="{TemplateBinding Description}"
-                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                TextWrapping="Wrap"
-                            />
-                        </StackPanel>
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="0,12,0,18"
+                            Text="{TemplateBinding Description}"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            TextWrapping="Wrap"
+                        />
 
                         <Button
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center"
+                            VerticalAlignment="Bottom"
                             Command="{TemplateBinding Command}"
                         >
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -58,7 +71,7 @@
                                 <TextBlock Text="{TemplateBinding ButtonText}" />
                             </StackPanel>
                         </Button>
-                    </StackPanel>
+                    </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>
