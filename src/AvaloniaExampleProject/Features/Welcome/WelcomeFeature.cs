@@ -4,6 +4,5 @@ namespace AvaloniaExampleProject.Features.Welcome;
 
 public static class WelcomeFeature
 {
-    public static IServiceCollection AddWelcomeFeature(this IServiceCollection services) =>
-        services.AddTransient<WelcomeViewModel>();
+    public static IServiceCollection AddWelcomeFeature(this IServiceCollection services) => services;
 }

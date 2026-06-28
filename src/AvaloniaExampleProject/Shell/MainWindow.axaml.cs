@@ -23,7 +23,7 @@ public sealed partial class MainWindow : FAAppWindow
         _logger = provider.GetRequiredService<ILogger>().ForContext<MainWindow>();
         InitializeComponent();
 
-        DataContext = provider.GetRequiredService<MainWindowViewModel>();
+        DataContext = ActivatorUtilities.CreateInstance<MainWindowViewModel>(provider);
 
         ConfigureTitleBar();
 
@@ -47,7 +47,10 @@ public sealed partial class MainWindow : FAAppWindow
         // Create the MainView last. Run on the current dispatcher because the LoadAsync is initialized on the threadpool
         Dispatcher.Invoke(() =>
         {
-            WindowContent.Content = new MainView { ViewModel = _provider.GetRequiredService<MainViewModel>() };
+            WindowContent.Content = new MainView
+            {
+                ViewModel = ActivatorUtilities.CreateInstance<MainViewModel>(_provider),
+            };
         });
         _logger.Information("AvaloniaExampleProject started!");
     }

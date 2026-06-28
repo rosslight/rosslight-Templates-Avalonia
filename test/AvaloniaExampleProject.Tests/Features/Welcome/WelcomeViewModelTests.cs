@@ -10,7 +10,7 @@ public sealed class WelcomeViewModelTests
     [AvaloniaFact]
     public Task Render()
     {
-        var viewModel = TestAppBuilder.Services.GetRequiredService<WelcomeViewModel>();
+        var viewModel = ActivatorUtilities.CreateInstance<WelcomeViewModel>(TestAppBuilder.Services);
         var control = new WelcomeView { ViewModel = viewModel };
         return VerifyControl(control);
     }

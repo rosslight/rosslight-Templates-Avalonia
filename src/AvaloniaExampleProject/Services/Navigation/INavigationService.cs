@@ -12,9 +12,6 @@ public interface INavigationService : INotifyPropertyChanged
     /// <summary> The page that is currently active. </summary>
     ViewModelBase? CurrentPage { get; }
 
-    /// <summary> The type of the page that is currently active. </summary>
-    Type? CurrentPageType { get; }
-
     /// <summary> Indicates whether the navigation stack can be navigated back to. </summary>
     bool CanGoBack { get; }
 
@@ -31,24 +28,6 @@ public interface INavigationService : INotifyPropertyChanged
     Task<NavigationResult> NavigateToAsync(AppRoute route, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Navigate to a specific page
-    /// <list type="bullet">
-    /// <item>Wait for previous navigation operations to complete and take lock</item>
-    /// <item>Set and raise <see cref="IsNavigating"/> to <c>true</c></item>
-    /// <item>Call <see cref="IAsyncNavigationAware.OnNavigatingFromAsync"/></item>
-    /// <item>Call <see cref="IAsyncNavigationAware.OnNavigatingToAsync"/></item>
-    /// <item>Add the new page to the navigation stack</item>
-    /// <item>Raise <see cref="CurrentPage"/>, <see cref="CurrentPageType"/>, <see cref="CanGoBack"/> notifications</item>
-    /// <item>Set and raise <see cref="IsNavigating"/> to <c>false</c></item>
-    /// <item>Release lock</item>
-    /// </list>
-    /// </summary>
-    /// <param name="page"> The page to navigate to </param>
-    /// <param name="cancellationToken"> The cancellationToken to cancel the navigation operation </param>
-    /// <returns> The result of the navigation </returns>
-    Task<NavigationResult> NavigateToAsync(ViewModelBase page, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Go back to the previous page.
     /// <list type="bullet">
     /// <item>Wait for previous navigation operations to complete and take lock</item>
@@ -56,7 +35,7 @@ public interface INavigationService : INotifyPropertyChanged
     /// <item>Call <see cref="IAsyncNavigationAware.OnNavigatingFromAsync"/></item>
     /// <item>Call <see cref="IAsyncNavigationAware.OnNavigatingToAsync"/></item>
     /// <item>Pop the currently active page from the back stack</item>
-    /// <item>Raise <see cref="CurrentPage"/>, <see cref="CurrentPageType"/>, <see cref="CanGoBack"/> notifications</item>
+    /// <item>Raise <see cref="CurrentPage"/>, <see cref="CanGoBack"/> notifications</item>
     /// <item>Set and raise <see cref="IsNavigating"/> to <c>false</c></item>
     /// <item>Release lock</item>
     /// </list>

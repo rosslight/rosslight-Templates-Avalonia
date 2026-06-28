@@ -9,15 +9,13 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
     : ObservableObject,
         INavigationService
 {
-    private readonly Stack<NavigationEntry> _backStack = [];
+    private readonly Stack<AppRoute> _backStack = [];
     private readonly INavigationRegistry _navigationRegistry = navigationRegistry;
     private readonly ILogger _logger = logger.ForContext<NavigationService>();
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
     private NavigationEntry? _currentEntry;
 
     public ViewModelBase? CurrentPage => _currentEntry?.ViewModel;
-
-    public Type? CurrentPageType => _currentEntry?.ViewModelType;
 
     public bool CanGoBack => _backStack.Count > 0;
 
@@ -32,16 +30,13 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
 
     public Task<NavigationResult> NavigateToAsync(AppRoute route, CancellationToken cancellationToken = default)
     {
-        ViewModelBase viewModel = _navigationRegistry.Create(route);
-        return NavigateToAsync(viewModel, cancellationToken);
+        return NavigateToInternalAsync(route, cancellationToken);
     }
-
-    public Task<NavigationResult> NavigateToAsync(ViewModelBase page, CancellationToken cancellationToken = default) =>
-        NavigateToInternalAsync(page, cancellationToken);
 
     public async Task<NavigationResult> GoBackAsync(CancellationToken cancellationToken = default)
     {
         Type? sourceViewModelType = _currentEntry?.ViewModelType;
+        AppRoute? sourceRoute = _currentEntry?.Route;
         try
         {
             await _navigationLock.WaitAsync(cancellationToken);
@@ -73,25 +68,28 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    Type targetViewModelType = _backStack.Peek().ViewModelType;
+                    AppRoute cancelledTargetRoute = _backStack.Peek();
                     _logger.Verbose(
-                        "Navigation back from {SourceViewModelType} to {TargetViewModelType} cancelled",
-                        sourceViewModelType?.Name,
-                        targetViewModelType.Name
+                        "Navigation back from {SourceRoute} to {TargetRoute} cancelled",
+                        sourceRoute,
+                        cancelledTargetRoute
                     );
                     return NavigationResult.Cancelled;
                 }
 
-                NavigationEntry targetEntry = _backStack.Peek();
+                AppRoute targetRoute = _backStack.Peek();
+                NavigationEntry targetEntry = CreateEntry(targetRoute);
                 await RunNavigatingToAsync(targetEntry.ViewModel, cancellationToken);
 
-                _currentEntry = _backStack.Pop();
+                _ = _backStack.Pop();
+                _currentEntry = targetEntry;
 
                 Dispatcher.UIThread.Invoke(NotifyNavigationChanged);
 
                 _logger.Verbose(
-                    "Navigated back from {SourceViewModelType} to {TargetViewModelType}",
-                    sourceViewModelType?.Name,
+                    "Navigated back from {SourceRoute} to {TargetRoute} ({TargetViewModelType})",
+                    sourceRoute,
+                    targetRoute,
                     targetEntry.ViewModelType.Name
                 );
                 return NavigationResult.Succeeded;
@@ -101,13 +99,9 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
                 _logger.Verbose(e, "Navigation back from {SourceViewModelType} cancelled", sourceViewModelType?.Name);
                 return NavigationResult.Cancelled;
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                _logger.Error(
-                    exception,
-                    "Navigation back from {SourceViewModelType} failed",
-                    sourceViewModelType?.Name
-                );
+                _logger.Error(e, "Navigation back from {SourceViewModelType} failed", sourceViewModelType?.Name);
                 return NavigationResult.Failed;
             }
             finally
@@ -121,13 +115,9 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
         }
     }
 
-    private async Task<NavigationResult> NavigateToInternalAsync(
-        ViewModelBase viewModel,
-        CancellationToken cancellationToken
-    )
+    private async Task<NavigationResult> NavigateToInternalAsync(AppRoute route, CancellationToken cancellationToken)
     {
-        Type targetViewModelType = viewModel.GetType();
-        Type? sourceViewModelType = _currentEntry?.ViewModelType;
+        AppRoute? sourceRoute = _currentEntry?.Route;
         try
         {
             await _navigationLock.WaitAsync(cancellationToken);
@@ -135,9 +125,9 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
         catch (OperationCanceledException)
         {
             _logger.Verbose(
-                "Navigation from {SourceViewModelType} to {TargetViewModelType} cancelled while waiting for lock",
-                sourceViewModelType?.Name,
-                targetViewModelType.Name
+                "Navigation from {SourceRoute} to {TargetRoute} cancelled while waiting for lock",
+                sourceRoute,
+                route
             );
             return NavigationResult.Cancelled;
         }
@@ -145,54 +135,46 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
         {
             try
             {
-                if (_currentEntry?.ViewModelType == targetViewModelType)
+                if (_currentEntry?.Route == route)
                 {
                     _logger.Verbose(
-                        "Navigation from {SourceViewModelType} to {TargetViewModelType} skipped because target is already current",
-                        sourceViewModelType?.Name,
-                        targetViewModelType.Name
+                        "Navigation from {SourceRoute} to {TargetRoute} skipped because target is already current",
+                        sourceRoute,
+                        route
                     );
                     return NavigationResult.NoOp;
                 }
+
+                NavigationEntry targetEntry = CreateEntry(route);
 
                 Dispatcher.UIThread.Invoke(() => IsNavigating = true);
 
                 await RunNavigatingFromAsync(_currentEntry?.ViewModel, cancellationToken);
 
-                NavigationEntry targetEntry = new(targetViewModelType, viewModel);
                 await RunNavigatingToAsync(targetEntry.ViewModel, cancellationToken);
 
                 if (_currentEntry is not null)
-                    _backStack.Push(_currentEntry);
+                    _backStack.Push(_currentEntry.Route);
 
                 _currentEntry = targetEntry;
                 Dispatcher.UIThread.Invoke(NotifyNavigationChanged);
 
                 _logger.Verbose(
-                    "Navigated from {SourceViewModelType} to {TargetViewModelType}",
-                    sourceViewModelType?.Name,
-                    targetViewModelType.Name
+                    "Navigated from {SourceRoute} to {TargetRoute} ({TargetViewModelType})",
+                    sourceRoute,
+                    route,
+                    targetEntry.ViewModelType.Name
                 );
                 return NavigationResult.Succeeded;
             }
             catch (OperationCanceledException e)
             {
-                _logger.Verbose(
-                    e,
-                    "Navigation from {SourceViewModelType} to {TargetViewModelType} cancelled",
-                    sourceViewModelType?.Name,
-                    targetViewModelType.Name
-                );
+                _logger.Verbose(e, "Navigation from {SourceRoute} to {TargetRoute} cancelled", sourceRoute, route);
                 return NavigationResult.Cancelled;
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                _logger.Error(
-                    exception,
-                    "Navigation from {SourceViewModelType} to {TargetViewModelType} failed",
-                    sourceViewModelType?.Name,
-                    targetViewModelType.Name
-                );
+                _logger.Error(e, "Navigation from {SourceRoute} to {TargetRoute} failed", sourceRoute, route);
                 return NavigationResult.Failed;
             }
             finally
@@ -221,9 +203,14 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
     private void NotifyNavigationChanged()
     {
         OnPropertyChanged(nameof(CurrentPage));
-        OnPropertyChanged(nameof(CurrentPageType));
         OnPropertyChanged(nameof(CanGoBack));
     }
 
-    private sealed record NavigationEntry(Type ViewModelType, ViewModelBase ViewModel);
+    private NavigationEntry CreateEntry(AppRoute route)
+    {
+        ViewModelBase viewModel = _navigationRegistry.Create(route);
+        return new NavigationEntry(route, viewModel.GetType(), viewModel);
+    }
+
+    private sealed record NavigationEntry(AppRoute Route, Type ViewModelType, ViewModelBase ViewModel);
 }

@@ -35,7 +35,10 @@ public class SettingsViewModelTests
     [AvaloniaFact]
     public Task Render()
     {
-        var control = new SettingsView { ViewModel = TestAppBuilder.Services.GetRequiredService<SettingsViewModel>() };
+        var control = new SettingsView
+        {
+            ViewModel = ActivatorUtilities.CreateInstance<SettingsViewModel>(TestAppBuilder.Services),
+        };
         return VerifyControl(control).ScrubMembersWithType<Resources>();
     }
 
@@ -44,7 +47,7 @@ public class SettingsViewModelTests
     {
         var control = new SettingsView
         {
-            ViewModel = TestAppBuilder.Services.GetRequiredService<SettingsViewModel>(),
+            ViewModel = ActivatorUtilities.CreateInstance<SettingsViewModel>(TestAppBuilder.Services),
             AboutSettingsExpander = { IsExpanded = true },
         };
         return VerifyControl(control).ScrubMembersWithType<Resources>();
@@ -59,7 +62,7 @@ public class SettingsViewModelTests
             () => tempConfig,
             cancellationToken: TestContext.Current.CancellationToken
         );
-        var viewModel = _services.GetRequiredService<SettingsViewModel>();
+        var viewModel = ActivatorUtilities.CreateInstance<SettingsViewModel>(_services);
         var themeService = _services.GetRequiredService<IThemeService>();
 
         var themeTask = themeService.RequestedThemeVariant.Skip(1).FirstAsync().ToTask();
@@ -80,7 +83,7 @@ public class SettingsViewModelTests
             () => tempConfig,
             cancellationToken: TestContext.Current.CancellationToken
         );
-        var viewModel = _services.GetRequiredService<SettingsViewModel>();
+        var viewModel = ActivatorUtilities.CreateInstance<SettingsViewModel>(_services);
         var i18N = _services.GetRequiredService<Resources>();
         i18N.Culture = new CultureInfo(Resources.Languages.Default);
 

@@ -4,6 +4,5 @@ namespace AvaloniaExampleProject.Features.Settings;
 
 public static class SettingsFeature
 {
-    public static IServiceCollection AddSettingsFeature(this IServiceCollection services) =>
-        services.AddTransient<SettingsViewModel>();
+    public static IServiceCollection AddSettingsFeature(this IServiceCollection services) => services;
 }

@@ -11,10 +11,13 @@ public static class DesignData
 {
     public static IServiceProvider Services => App.Current.Services;
 
-    public static WelcomeViewModel WelcomeViewModel { get; } = Services.GetRequiredService<WelcomeViewModel>();
-    public static DialogsViewModel DialogsViewModel { get; } = Services.GetRequiredService<DialogsViewModel>();
+    public static WelcomeViewModel WelcomeViewModel { get; } =
+        ActivatorUtilities.CreateInstance<WelcomeViewModel>(Services);
+    public static DialogsViewModel DialogsViewModel { get; } =
+        ActivatorUtilities.CreateInstance<DialogsViewModel>(Services);
     public static ProjectDialogViewModel ProjectDialogViewModel { get; } =
         new(Services.GetRequiredService<Resources>());
-    public static SettingsViewModel SettingsViewModel { get; } = Services.GetRequiredService<SettingsViewModel>();
-    public static MainViewModel MainViewModel { get; } = Services.GetRequiredService<MainViewModel>();
+    public static SettingsViewModel SettingsViewModel { get; } =
+        ActivatorUtilities.CreateInstance<SettingsViewModel>(Services);
+    public static MainViewModel MainViewModel { get; } = ActivatorUtilities.CreateInstance<MainViewModel>(Services);
 }

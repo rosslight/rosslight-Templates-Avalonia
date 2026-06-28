@@ -11,7 +11,10 @@ public sealed class DialogsViewModelTests
     [AvaloniaFact]
     public Task Render()
     {
-        var control = new DialogsView { ViewModel = TestAppBuilder.Services.GetRequiredService<DialogsViewModel>() };
+        var control = new DialogsView
+        {
+            ViewModel = ActivatorUtilities.CreateInstance<DialogsViewModel>(TestAppBuilder.Services),
+        };
         return VerifyControl(control);
     }
 

@@ -35,8 +35,6 @@ public static class Bootstrapper
             // Configure common services
             .AddCommonServices()
             // Configure Features
-            .AddTransient<MainWindowViewModel>()
-            .AddTransient<MainViewModel>()
             .AddWelcomeFeature()
             .AddDialogsFeature()
             .AddSettingsFeature();
