@@ -101,4 +101,259 @@
   <data name="Welcome.ClickMe.ResultsTitle" xml:space="preserve">
     <value>Result</value>
   </data>
+  <data name="Dialogs.Title" xml:space="preserve">
+    <value>Dialogs</value>
+  </data>
+  <data name="Dialogs.Description" xml:space="preserve">
+    <value>Run built-in and custom dialog experiences from one showcase.</value>
+  </data>
+  <data name="Dialogs.OpenButton" xml:space="preserve">
+    <value>Run demo</value>
+  </data>
+  <data name="Dialogs.CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Dialogs.CreateButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Dialogs.SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Dialogs.SaveDraftButton" xml:space="preserve">
+    <value>Save as draft</value>
+  </data>
+  <data name="Dialogs.DeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Dialogs.Result.Title" xml:space="preserve">
+    <value>Last result</value>
+  </data>
+  <data name="Dialogs.Result.Empty" xml:space="preserve">
+    <value>Run a demo to see the latest dialog result.</value>
+  </data>
+  <data name="Dialogs.BuiltIn.Title" xml:space="preserve">
+    <value>Built-in dialogs</value>
+  </data>
+  <data name="Dialogs.CustomContent.Title" xml:space="preserve">
+    <value>Custom content</value>
+  </data>
+  <data name="Dialogs.Validation.Title" xml:space="preserve">
+    <value>Validation and button state</value>
+  </data>
+  <data name="Dialogs.Advanced.Title" xml:space="preserve">
+    <value>Advanced flows</value>
+  </data>
+  <data name="Dialogs.MessageBox.Title" xml:space="preserve">
+    <value>MessageBoxDialog</value>
+  </data>
+  <data name="Dialogs.MessageBox.Description" xml:space="preserve">
+    <value>Show a clear status message after an action.</value>
+  </data>
+  <data name="Dialogs.MessageBox.UserStory" xml:space="preserve">
+    <value>As a user, I want to receive a clear confirmation or information message, so I understand the result of an action before continuing.</value>
+  </data>
+  <data name="Dialogs.MessageBox.DialogTitle" xml:space="preserve">
+    <value>Save completed</value>
+  </data>
+  <data name="Dialogs.MessageBox.DialogMessage" xml:space="preserve">
+    <value>The current document was saved successfully.</value>
+  </data>
+  <data name="Dialogs.SelectableMessage.Title" xml:space="preserve">
+    <value>Selectable message text</value>
+  </data>
+  <data name="Dialogs.SelectableMessage.Description" xml:space="preserve">
+    <value>Show details that can be selected and copied.</value>
+  </data>
+  <data name="Dialogs.SelectableMessage.UserStory" xml:space="preserve">
+    <value>As a user, I want to copy diagnostic details from a dialog, so I can share them with support.</value>
+  </data>
+  <data name="Dialogs.SelectableMessage.DialogTitle" xml:space="preserve">
+    <value>Export details</value>
+  </data>
+  <data name="Dialogs.SelectableMessage.DialogMessage" xml:space="preserve">
+    <value>Export finished at 10:42. Files: app.log, diagnostics.json, screenshot.png. Reference: EXP-2026-06-28-1042.</value>
+  </data>
+  <data name="Dialogs.Input.Title" xml:space="preserve">
+    <value>InputDialog</value>
+  </data>
+  <data name="Dialogs.Input.Description" xml:space="preserve">
+    <value>Collect one small value without leaving the page.</value>
+  </data>
+  <data name="Dialogs.Input.UserStory" xml:space="preserve">
+    <value>As a user, I want to enter a small single value without navigating away from the current screen.</value>
+  </data>
+  <data name="Dialogs.Input.DialogTitle" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="Dialogs.Input.DialogMessage" xml:space="preserve">
+    <value>Enter the name shown to other users.</value>
+  </data>
+  <data name="Dialogs.Input.Watermark" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="Dialogs.Input.RequiredError" xml:space="preserve">
+    <value>Enter a display name.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.Title" xml:space="preserve">
+    <value>UsernamePasswordDialog</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.Description" xml:space="preserve">
+    <value>Use a guided credential prompt with separate steps.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.UserStory" xml:space="preserve">
+    <value>As a user, I want a guided credential prompt that separates username and password entry and validates each step.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.DialogTitle" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.UsernameMessage" xml:space="preserve">
+    <value>Enter your email address.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.PasswordMessage" xml:space="preserve">
+    <value>Enter a password with at least 8 characters.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.EmailError" xml:space="preserve">
+    <value>Use an email address.</value>
+  </data>
+  <data name="Dialogs.UsernamePassword.PasswordError" xml:space="preserve">
+    <value>Use at least 8 characters.</value>
+  </data>
+  <data name="Dialogs.Project.NameWatermark" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="Dialogs.Project.TemplateLabel" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="Dialogs.Project.OpenAfterCreate" xml:space="preserve">
+    <value>Open after create</value>
+  </data>
+  <data name="Dialogs.CustomInput.Title" xml:space="preserve">
+    <value>CustomInput</value>
+  </data>
+  <data name="Dialogs.CustomInput.Description" xml:space="preserve">
+    <value>Collect structured input with custom dialog content.</value>
+  </data>
+  <data name="Dialogs.CustomInput.UserStory" xml:space="preserve">
+    <value>As a user, I want a dialog tailored to the data being collected when a plain text input is too limited.</value>
+  </data>
+  <data name="Dialogs.CustomInput.DialogTitle" xml:space="preserve">
+    <value>Create project</value>
+  </data>
+  <data name="Dialogs.SecondaryAction.Title" xml:space="preserve">
+    <value>Secondary action</value>
+  </data>
+  <data name="Dialogs.SecondaryAction.Description" xml:space="preserve">
+    <value>Provide another valid action next to the primary action.</value>
+  </data>
+  <data name="Dialogs.SecondaryAction.UserStory" xml:space="preserve">
+    <value>As a user, I want a dialog to support an alternate valid action without losing context.</value>
+  </data>
+  <data name="Dialogs.SecondaryAction.DialogTitle" xml:space="preserve">
+    <value>Save project</value>
+  </data>
+  <data name="Dialogs.IsEnabled.Title" xml:space="preserve">
+    <value>Custom IsEnabled binding</value>
+  </data>
+  <data name="Dialogs.IsEnabled.Description" xml:space="preserve">
+    <value>Enable the confirm button only when the content is complete.</value>
+  </data>
+  <data name="Dialogs.IsEnabled.UserStory" xml:space="preserve">
+    <value>As a user, I want the confirm button to become available only when the dialog content is complete, so I cannot submit invalid state.</value>
+  </data>
+  <data name="Dialogs.IsEnabled.DialogTitle" xml:space="preserve">
+    <value>Complete required fields</value>
+  </data>
+  <data name="Dialogs.SyncValidation.Title" xml:space="preserve">
+    <value>Custom OnClick validation</value>
+  </data>
+  <data name="Dialogs.SyncValidation.Description" xml:space="preserve">
+    <value>Keep the dialog open when a business rule rejects the value.</value>
+  </data>
+  <data name="Dialogs.SyncValidation.UserStory" xml:space="preserve">
+    <value>As a user, I want immediate validation feedback when submitted data violates a business rule.</value>
+  </data>
+  <data name="Dialogs.SyncValidation.DialogTitle" xml:space="preserve">
+    <value>Reserved names</value>
+  </data>
+  <data name="Dialogs.SyncValidation.ReservedNameError" xml:space="preserve">
+    <value>The name admin is reserved.</value>
+  </data>
+  <data name="Dialogs.AsyncValidation.Title" xml:space="preserve">
+    <value>Custom async OnClick validation</value>
+  </data>
+  <data name="Dialogs.AsyncValidation.Description" xml:space="preserve">
+    <value>Check an expensive condition before closing the dialog.</value>
+  </data>
+  <data name="Dialogs.AsyncValidation.UserStory" xml:space="preserve">
+    <value>As a user, I want the dialog to check expensive or remote conditions before closing.</value>
+  </data>
+  <data name="Dialogs.AsyncValidation.DialogTitle" xml:space="preserve">
+    <value>Workspace availability</value>
+  </data>
+  <data name="Dialogs.AsyncValidation.NameTakenError" xml:space="preserve">
+    <value>The workspace name is already taken.</value>
+  </data>
+  <data name="Dialogs.AutoClose.Title" xml:space="preserve">
+    <value>Timed auto-close by disposal</value>
+  </data>
+  <data name="Dialogs.AutoClose.Description" xml:space="preserve">
+    <value>Close a transient dialog automatically after 5 seconds.</value>
+  </data>
+  <data name="Dialogs.AutoClose.UserStory" xml:space="preserve">
+    <value>As a user, I want transient dialogs to close automatically when their message is no longer relevant.</value>
+  </data>
+  <data name="Dialogs.AutoClose.DialogTitle" xml:space="preserve">
+    <value>Sync in progress</value>
+  </data>
+  <data name="Dialogs.AutoClose.DialogMessage" xml:space="preserve">
+    <value>This dialog closes itself after 5 seconds by disposing the dialog awaitable.</value>
+  </data>
+  <data name="Dialogs.ForcedDecision.Title" xml:space="preserve">
+    <value>Escape disabled</value>
+  </data>
+  <data name="Dialogs.ForcedDecision.Description" xml:space="preserve">
+    <value>Require an explicit choice for critical actions.</value>
+  </data>
+  <data name="Dialogs.ForcedDecision.UserStory" xml:space="preserve">
+    <value>As a user, I want critical dialogs to require an explicit choice instead of being dismissed accidentally.</value>
+  </data>
+  <data name="Dialogs.ForcedDecision.DialogTitle" xml:space="preserve">
+    <value>Delete workspace?</value>
+  </data>
+  <data name="Dialogs.ForcedDecision.DialogMessage" xml:space="preserve">
+    <value>This action cannot be undone. Escape is disabled so the dialog requires an explicit button choice.</value>
+  </data>
+  <data name="Dialogs.Result.MessageAcknowledged" xml:space="preserve">
+    <value>Message acknowledged.</value>
+  </data>
+  <data name="Dialogs.Result.SelectableMessageClosed" xml:space="preserve">
+    <value>Selectable details dialog closed.</value>
+  </data>
+  <data name="Dialogs.Result.Dismissed" xml:space="preserve">
+    <value>Dialog dismissed.</value>
+  </data>
+  <data name="Dialogs.Result.DisplayName" xml:space="preserve">
+    <value>Display name: {0}</value>
+  </data>
+  <data name="Dialogs.Result.SignedIn" xml:space="preserve">
+    <value>Signed in as {0}. Password was not written to the result area.</value>
+  </data>
+  <data name="Dialogs.Result.ProjectCreated" xml:space="preserve">
+    <value>Project created</value>
+  </data>
+  <data name="Dialogs.Result.Project" xml:space="preserve">
+    <value>{0}: {1} using {2}. Open after create: {3}.</value>
+  </data>
+  <data name="Dialogs.Result.ProjectDraftSaved" xml:space="preserve">
+    <value>Draft saved for {0}.</value>
+  </data>
+  <data name="Dialogs.Result.ProjectSaved" xml:space="preserve">
+    <value>Saved project {0}.</value>
+  </data>
+  <data name="Dialogs.Result.ClosedByDisposal" xml:space="preserve">
+    <value>Dialog closed after 5 seconds by disposing the dialog awaitable.</value>
+  </data>
+  <data name="Dialogs.Result.DeleteConfirmed" xml:space="preserve">
+    <value>Delete confirmed.</value>
+  </data>
 </root>

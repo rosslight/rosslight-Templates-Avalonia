@@ -7,8 +7,15 @@
       Type: StackPanel,
       Spacing: 8.0,
       MaxWidth: 1024.0,
-      Margin: 0,0,0,48,
+      Margin: 24,18,24,48,
       Children: [
+        {
+          Type: TextBlock,
+          FontSize: 28.0,
+          FontWeight: DemiBold,
+          Text: Settings,
+          Margin: 0,0,0,12
+        },
         {
           Type: TextBlock,
           Text: Personalization,

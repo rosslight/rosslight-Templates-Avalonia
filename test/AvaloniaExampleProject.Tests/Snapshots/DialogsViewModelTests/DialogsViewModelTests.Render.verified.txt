@@ -1,0 +1,488 @@
+{
+  Type: DialogsView,
+  Content: {
+    Type: ScrollViewer,
+    VerticalScrollBarVisibility: Auto,
+    Content: {
+      Type: StackPanel,
+      Spacing: 0.0,
+      MaxWidth: 1056.0,
+      Margin: 24,18,24,48,
+      Children: [
+        {
+          Type: TextBlock,
+          FontSize: 28.0,
+          FontWeight: DemiBold,
+          Text: Dialogs
+        },
+        {
+          Type: TextBlock,
+          Foreground: {
+            Type: SolidColorBrush,
+            Color: {
+              A: 158
+            }
+          },
+          Text: Run built-in and custom dialog experiences from one showcase.,
+          TextWrapping: Wrap,
+          Margin: 0,4,0,0
+        },
+        {
+          Type: Border,
+          Background: {
+            Type: SolidColorBrush,
+            Color: {
+              A: 179,
+              R: 255,
+              G: 255,
+              B: 255
+            }
+          },
+          BorderBrush: {
+            Type: SolidColorBrush,
+            Color: {
+              A: 15
+            }
+          },
+          BorderThickness: 1,
+          CornerRadius: 8,8,8,8,
+          Child: {
+            Type: Grid,
+            ColumnSpacing: 12.0,
+            Children: [
+              {
+                Type: FASymbolIcon,
+                Symbol: ShowResults,
+                FontSize: 20.0,
+                Foreground: {
+                  Type: SolidColorBrush
+                },
+                Width: 28.0,
+                Height: 28.0
+              },
+              {
+                Type: StackPanel,
+                Spacing: 2.0,
+                Children: [
+                  {
+                    Type: TextBlock,
+                    Text: Last result,
+                    Theme: {
+                      Type: ControlTheme
+                    }
+                  },
+                  {
+                    Type: SelectableTextBlock,
+                    Text: Run a demo to see the latest dialog result.,
+                    TextWrapping: Wrap,
+                    Theme: {
+                      Type: ControlTheme
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          Padding: 14,
+          MaxWidth: 1044.0,
+          Margin: 0,20,0,22,
+          HorizontalAlignment: Stretch
+        },
+        {
+          Type: ItemsControl,
+          ItemsPanel: {
+            Content: {}
+          },
+          ItemsSource: [
+            {
+              Title: MessageBoxDialog,
+              Description: Show a clear status message after an action.,
+              Icon: Message,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 15,
+                  G: 120,
+                  B: 212
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowMessageBoxDialog
+            },
+            {
+              Title: Selectable message text,
+              Description: Show details that can be selected and copied.,
+              Icon: Clipboard,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 107,
+                  G: 93,
+                  B: 211
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSelectableMessageBoxDialog
+            },
+            {
+              Title: InputDialog,
+              Description: Collect one small value without leaving the page.,
+              Icon: Edit,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 201,
+                  G: 95
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowInputDialog
+            },
+            {
+              Title: UsernamePasswordDialog,
+              Description: Use a guided credential prompt with separate steps.,
+              Icon: ContactInfo,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 35,
+                  G: 138,
+                  B: 59
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowUsernamePasswordDialog
+            },
+            {
+              Title: CustomInput,
+              Description: Collect structured input with custom dialog content.,
+              Icon: Page,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 209,
+                  G: 111
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowCustomInputDialog
+            },
+            {
+              Title: Secondary action,
+              Description: Provide another valid action next to the primary action.,
+              Icon: SaveAs,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 71,
+                  G: 111
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSecondaryActionDialog
+            },
+            {
+              Title: Custom IsEnabled binding,
+              Description: Enable the confirm button only when the content is complete.,
+              Icon: Accept,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  G: 130,
+                  B: 114
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowIsEnabledDialog
+            },
+            {
+              Title: Custom OnClick validation,
+              Description: Keep the dialog open when a business rule rejects the value.,
+              Icon: Permissions,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 193,
+                  G: 156
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSyncValidationDialog
+            },
+            {
+              Title: Custom async OnClick validation,
+              Description: Check an expensive condition before closing the dialog.,
+              Icon: Sync,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 118,
+                  G: 87,
+                  B: 200
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAsyncValidationDialog
+            },
+            {
+              Title: Timed auto-close by disposal,
+              Description: Close a transient dialog automatically after 5 seconds.,
+              Icon: Clock,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 43,
+                  G: 124,
+                  B: 211
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAutoCloseDialog
+            },
+            {
+              Title: Escape disabled,
+              Description: Require an explicit choice for critical actions.,
+              Icon: Cancel,
+              IconBrush: {
+                Type: SolidColorBrush,
+                Color: {
+                  A: 255,
+                  R: 216,
+                  G: 59,
+                  B: 1
+                },
+                Opacity: 1.0
+              },
+              ButtonText: Run demo,
+              Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowForcedDecisionDialog
+            }
+          ],
+          ItemTemplate: {
+            DataType: DialogShowcaseItem,
+            Content: {}
+          }
+        }
+      ]
+    }
+  },
+  FontFamily: Inter,
+  DataContext: {
+    I18N: {Scrubbed},
+    ShowcaseItems: [
+      {
+        Title: MessageBoxDialog,
+        Description: Show a clear status message after an action.,
+        Icon: Message,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 15,
+            G: 120,
+            B: 212
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowMessageBoxDialog
+      },
+      {
+        Title: Selectable message text,
+        Description: Show details that can be selected and copied.,
+        Icon: Clipboard,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 107,
+            G: 93,
+            B: 211
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSelectableMessageBoxDialog
+      },
+      {
+        Title: InputDialog,
+        Description: Collect one small value without leaving the page.,
+        Icon: Edit,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 201,
+            G: 95
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowInputDialog
+      },
+      {
+        Title: UsernamePasswordDialog,
+        Description: Use a guided credential prompt with separate steps.,
+        Icon: ContactInfo,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 35,
+            G: 138,
+            B: 59
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowUsernamePasswordDialog
+      },
+      {
+        Title: CustomInput,
+        Description: Collect structured input with custom dialog content.,
+        Icon: Page,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 209,
+            G: 111
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowCustomInputDialog
+      },
+      {
+        Title: Secondary action,
+        Description: Provide another valid action next to the primary action.,
+        Icon: SaveAs,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 71,
+            G: 111
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSecondaryActionDialog
+      },
+      {
+        Title: Custom IsEnabled binding,
+        Description: Enable the confirm button only when the content is complete.,
+        Icon: Accept,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            G: 130,
+            B: 114
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowIsEnabledDialog
+      },
+      {
+        Title: Custom OnClick validation,
+        Description: Keep the dialog open when a business rule rejects the value.,
+        Icon: Permissions,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 193,
+            G: 156
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSyncValidationDialog
+      },
+      {
+        Title: Custom async OnClick validation,
+        Description: Check an expensive condition before closing the dialog.,
+        Icon: Sync,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 118,
+            G: 87,
+            B: 200
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAsyncValidationDialog
+      },
+      {
+        Title: Timed auto-close by disposal,
+        Description: Close a transient dialog automatically after 5 seconds.,
+        Icon: Clock,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 43,
+            G: 124,
+            B: 211
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAutoCloseDialog
+      },
+      {
+        Title: Escape disabled,
+        Description: Require an explicit choice for critical actions.,
+        Icon: Cancel,
+        IconBrush: {
+          Type: SolidColorBrush,
+          Color: {
+            A: 255,
+            R: 216,
+            G: 59,
+            B: 1
+          },
+          Opacity: 1.0
+        },
+        ButtonText: Run demo,
+        Command: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowForcedDecisionDialog
+      }
+    ],
+    LastResult: Run a demo to see the latest dialog result.,
+    ShowMessageBoxDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowMessageBoxDialog,
+    ShowSelectableMessageBoxDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSelectableMessageBoxDialog,
+    ShowInputDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowInputDialog,
+    ShowUsernamePasswordDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowUsernamePasswordDialog,
+    ShowCustomInputDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowCustomInputDialog,
+    ShowSecondaryActionDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSecondaryActionDialog,
+    ShowIsEnabledDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowIsEnabledDialog,
+    ShowSyncValidationDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSyncValidationDialog,
+    ShowAsyncValidationDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAsyncValidationDialog,
+    ShowAutoCloseDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowAutoCloseDialog,
+    ShowForcedDecisionDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowForcedDecisionDialog
+  }
+}

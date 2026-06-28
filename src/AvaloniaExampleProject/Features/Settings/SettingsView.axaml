@@ -24,7 +24,13 @@
         <system:Double x:Key="SettingsViewMaxWidth">1024</system:Double>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel MaxWidth="{StaticResource SettingsViewMaxWidth}" Margin="0,0,0,48" Spacing="8">
+        <StackPanel MaxWidth="{StaticResource SettingsViewMaxWidth}" Margin="24,18,24,48" Spacing="8">
+            <TextBlock
+                Text="{CompiledBinding I18N.Settings_Title}"
+                FontSize="28"
+                FontWeight="SemiBold"
+                Margin="0,0,0,12"
+            />
             <!-- Personalization
             This section contains UI specific configuration that does not change the behavior of the app
             -->

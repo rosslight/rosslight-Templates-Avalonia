@@ -2,8 +2,16 @@
   Type: WelcomeView,
   Content: {
     Type: StackPanel,
+    Spacing: 8.0,
     Orientation: Vertical,
+    Margin: 24,18,24,48,
     Children: [
+      {
+        Type: TextBlock,
+        FontSize: 28.0,
+        FontWeight: DemiBold,
+        Text: Home
+      },
       {
         Type: TextBlock,
         Text: Welcome to Avalonia!

@@ -1,3 +1,5 @@
+using AvaloniaExampleProject.Assets;
+using AvaloniaExampleProject.Features.Dialogs;
 using AvaloniaExampleProject.Features.Settings;
 using AvaloniaExampleProject.Features.Welcome;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +12,9 @@ public static class DesignData
     public static IServiceProvider Services => App.Current.Services;
 
     public static WelcomeViewModel WelcomeViewModel { get; } = Services.GetRequiredService<WelcomeViewModel>();
+    public static DialogsViewModel DialogsViewModel { get; } = Services.GetRequiredService<DialogsViewModel>();
+    public static ProjectDialogViewModel ProjectDialogViewModel { get; } =
+        new(Services.GetRequiredService<Resources>());
     public static SettingsViewModel SettingsViewModel { get; } = Services.GetRequiredService<SettingsViewModel>();
     public static MainViewModel MainViewModel { get; } = Services.GetRequiredService<MainViewModel>();
 }

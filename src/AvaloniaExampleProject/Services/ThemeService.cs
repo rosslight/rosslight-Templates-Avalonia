@@ -1,5 +1,4 @@
 using Avalonia.Styling;
-using AvaloniaExampleProject.Shell;
 using Darp.Utils.Configuration;
 
 namespace AvaloniaExampleProject.Services;

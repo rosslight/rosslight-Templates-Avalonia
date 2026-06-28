@@ -12,7 +12,8 @@
     x:DataType="viewModels:WelcomeViewModel"
     Design.DataContext="{x:Static designTime:DesignData.WelcomeViewModel}"
 >
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Margin="24,18,24,48" Spacing="8">
+        <TextBlock Text="{CompiledBinding I18N.Welcome_Title}" FontSize="28" FontWeight="SemiBold" />
         <TextBlock Text="{CompiledBinding I18N.Welcome_Greeting}" />
         <Button Content="{CompiledBinding I18N.Welcome_ClickMe}" Command="{CompiledBinding ShowInputDialogCommand}" />
     </StackPanel>

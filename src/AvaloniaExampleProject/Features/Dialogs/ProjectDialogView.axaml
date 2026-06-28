@@ -1,0 +1,39 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:AvaloniaExampleProject.Features.Dialogs"
+    xmlns:designTime="clr-namespace:AvaloniaExampleProject.Shell.DesignTime"
+    mc:Ignorable="d"
+    d:DesignWidth="420"
+    d:DesignHeight="220"
+    x:Class="AvaloniaExampleProject.Features.Dialogs.ProjectDialogView"
+    x:DataType="vm:ProjectDialogViewModel"
+    Design.DataContext="{x:Static designTime:DesignData.ProjectDialogViewModel}"
+>
+    <StackPanel Spacing="8">
+        <TextBox
+            PlaceholderText="{CompiledBinding I18N.Dialogs_Project_NameWatermark}"
+            Text="{CompiledBinding ProjectName, Mode=TwoWay}"
+        />
+        <TextBlock
+            Text="{CompiledBinding I18N.Dialogs_Project_TemplateLabel}"
+            Theme="{StaticResource CaptionTextBlockStyle}"
+        />
+        <ComboBox
+            HorizontalAlignment="Stretch"
+            ItemsSource="{CompiledBinding TemplateOptions}"
+            SelectedItem="{CompiledBinding SelectedTemplate, Mode=TwoWay}"
+        />
+        <CheckBox
+            Content="{CompiledBinding I18N.Dialogs_Project_OpenAfterCreate}"
+            IsChecked="{CompiledBinding OpenAfterCreate, Mode=TwoWay}"
+        />
+        <TextBlock
+            Text="{CompiledBinding ErrorMessage}"
+            Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+            TextWrapping="Wrap"
+        />
+    </StackPanel>
+</UserControl>

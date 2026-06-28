@@ -30,14 +30,16 @@
             <!-- Override this so the header is shown correctly -->
             <Thickness x:Key="NavigationViewHeaderMargin">8,8,0,0</Thickness>
         </controls:FANavigationView.Resources>
-        <controls:FANavigationView.Header>
-            <TextBlock Text="{CompiledBinding #NavView.((controls:FANavigationViewItem)SelectedItem).Content}" />
-        </controls:FANavigationView.Header>
         <controls:FANavigationView.MenuItems>
             <controls:FANavigationViewItem
                 IconSource="Home"
                 Tag="{x:Static avaloniaExampleProject:AppRoute.Welcome}"
                 Content="{CompiledBinding I18N.Welcome_Title}"
+            />
+            <controls:FANavigationViewItem
+                IconSource="Message"
+                Tag="{x:Static avaloniaExampleProject:AppRoute.Dialogs}"
+                Content="{CompiledBinding I18N.Dialogs_Title}"
             />
         </controls:FANavigationView.MenuItems>
         <controls:FANavigationView.FooterMenuItems>

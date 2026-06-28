@@ -1,19 +1,17 @@
 using System.Globalization;
 using Avalonia.Controls;
 using AvaloniaExampleProject.Assets;
+using AvaloniaExampleProject.Features.Dialogs;
 using AvaloniaExampleProject.Features.Settings;
 using AvaloniaExampleProject.Features.Welcome;
 using AvaloniaExampleProject.Services;
 using AvaloniaExampleProject.Shell;
 using Darp.Utils.Assets;
 using Darp.Utils.Configuration;
-using Darp.Utils.Dialog;
-using Darp.Utils.Dialog.FluentAvalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Formatting.Compact;
-using JsonContext = AvaloniaExampleProject.JsonContext;
 
 namespace AvaloniaExampleProject;
 
@@ -40,6 +38,7 @@ public static class Bootstrapper
             .AddTransient<MainWindowViewModel>()
             .AddTransient<MainViewModel>()
             .AddWelcomeFeature()
+            .AddDialogsFeature()
             .AddSettingsFeature();
         return serviceCollection;
     }
