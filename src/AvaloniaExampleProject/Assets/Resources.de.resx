@@ -44,6 +44,12 @@
   <data name="Settings.ExportLogs.Tooltip" xml:space="preserve">
     <value>Logs exportieren</value>
   </data>
+  <data name="Settings.ExportLogs.SuccessMessage" xml:space="preserve">
+    <value>Logs gespeichert unter {0}</value>
+  </data>
+  <data name="Settings.ExportLogs.ErrorMessage" xml:space="preserve">
+    <value>Logs konnten nicht gespeichert werden: {0}</value>
+  </data>
   <data name="Settings.Personalization.Title" xml:space="preserve">
     <value>Personalisierung</value>
   </data>

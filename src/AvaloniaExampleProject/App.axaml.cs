@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using AvaloniaExampleProject.Services;
@@ -48,8 +49,12 @@ public sealed class App : Application
             });
 #endif
             desktop.MainWindow = new MainWindow(Services);
+            // Attach services that require the MainWindow to be set
             var accessor = (MainWindowStorageProviderAccessor)Services.GetRequiredService<IStorageProviderAccessor>();
             accessor.SetTopLevel(desktop.MainWindow);
+            var notificationService = (MainWindowNotificationService)
+                Services.GetRequiredService<INotificationService>();
+            notificationService.SetTopLevel(desktop.MainWindow, NotificationPosition.BottomRight);
         }
 
         // Apply Setup necessary for the design mode

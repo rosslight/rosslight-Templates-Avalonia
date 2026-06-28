@@ -23,6 +23,7 @@ public sealed partial class SettingsViewModel(
     IAssetsFactory assetService,
     ILogExportService logExportService,
     IStorageProviderAccessor storageProviderAccessor,
+    INotificationService notificationService,
     ILogger logger
 ) : ViewModelBase
 {
@@ -34,6 +35,7 @@ public sealed partial class SettingsViewModel(
     );
     private readonly ILogExportService _logExportService = logExportService;
     private readonly IStorageProviderAccessor _storageProviderAccessor = storageProviderAccessor;
+    private readonly INotificationService _notificationService = notificationService;
     private readonly ILogger _logger = logger.ForContext<SettingsViewModel>();
 
     public static LogEventLevel[] AvailableLogEvents { get; } =
@@ -100,10 +102,19 @@ public sealed partial class SettingsViewModel(
             await using var destinationStream = await storageFile.OpenWriteAsync();
             await _logExportService.ExportAsync(destinationStream, cancellationToken);
             _logger.Debug("Saved logs to {Path}", storageFile.Path);
+            _notificationService.ShowSuccess(
+                I18N.Settings_ExportLogs_Tooltip,
+                I18N.FormatSettings_ExportLogs_SuccessMessage(storageFile.Path)
+            );
         }
         catch (Exception e)
         {
             _logger.Error(e, "Could not save logs because of {Message}", e.Message);
+            _notificationService.ShowError(
+                I18N.Settings_ExportLogs_Tooltip,
+                I18N.FormatSettings_ExportLogs_ErrorMessage(e.Message),
+                expiration: TimeSpan.FromSeconds(15)
+            );
         }
     }
 

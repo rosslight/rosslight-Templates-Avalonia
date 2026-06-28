@@ -18,6 +18,7 @@ public static class CommonServices
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAppInformationService, AppInformationService>()
             .AddSingleton<IStorageProviderAccessor, MainWindowStorageProviderAccessor>()
+            .AddSingleton<INotificationService, MainWindowNotificationService>()
             .AddSingleton<ILogExportService, LogExportService>();
     }
 }

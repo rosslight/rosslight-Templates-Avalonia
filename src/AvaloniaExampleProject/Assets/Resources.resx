@@ -53,6 +53,12 @@
   <data name="Settings.ExportLogs.Tooltip" xml:space="preserve">
     <value>Export logs</value>
   </data>
+  <data name="Settings.ExportLogs.SuccessMessage" xml:space="preserve">
+    <value>Saved logs to {0}</value>
+  </data>
+  <data name="Settings.ExportLogs.ErrorMessage" xml:space="preserve">
+    <value>Could not save logs: {0}</value>
+  </data>
   <data name="Settings.Theme.Default" xml:space="preserve">
     <value>Default</value>
   </data>
