@@ -1,10 +1,29 @@
 using AvaloniaExampleProject.Assets;
 using AvaloniaExampleProject.Services;
+using AvaloniaExampleProject.Services.Navigation;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaExampleProject.Shell;
 
-public sealed class MainWindowViewModel(Resources i18N, IThemeService themeService) : ViewModelBase
+public sealed partial class MainWindowViewModel : ViewModelBase
 {
-    public Resources I18N { get; } = i18N;
-    public IThemeService ThemeService { get; } = themeService;
+    public MainWindowViewModel(Resources i18N, IThemeService themeService, INavigationService navigationService)
+    {
+        I18N = i18N;
+        ThemeService = themeService;
+        NavigationService = navigationService;
+        navigationService.PropertyChanged += (_, _) => GoBackCommand.NotifyCanExecuteChanged();
+    }
+
+    public Resources I18N { get; }
+    public IThemeService ThemeService { get; }
+    public INavigationService NavigationService { get; }
+
+    [RelayCommand(CanExecute = nameof(CanGoBackInternal), AllowConcurrentExecutions = false)]
+    private async Task GoBackAsync(CancellationToken cancellationToken)
+    {
+        await NavigationService.GoBackAsync(cancellationToken);
+    }
+
+    private bool CanGoBackInternal() => NavigationService is { CanGoBack: true, IsNavigating: false };
 }

@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:windowing="clr-namespace:FluentAvalonia.UI.Windowing;assembly=FluentAvalonia"
+    xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     xmlns:viewModels="clr-namespace:AvaloniaExampleProject.Shell"
     mc:Ignorable="d"
     d:DesignWidth="800"
@@ -21,15 +22,29 @@
         <Grid
             Grid.Row="0"
             Name="TitleBarHost"
-            ColumnDefinitions="Auto,Auto,*,Auto"
+            ColumnDefinitions="Auto,Auto,Auto,*"
             Background="Transparent"
             Height="44"
             VerticalAlignment="Top"
             Margin="0,0,140,0"
             WindowDecorationProperties.ElementRole="TitleBar"
         >
-            <Image
+            <Button
                 Grid.Column="0"
+                Margin="4,6,2,6"
+                Width="32"
+                Height="32"
+                Command="{CompiledBinding GoBackCommand}"
+                Theme="{DynamicResource TransparentButton}"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                WindowDecorationProperties.ElementRole="User"
+            >
+                <controls:FASymbolIcon Symbol="Back" FontSize="18" />
+            </Button>
+            <Image
+                Grid.Column="1"
                 Margin="12,4,12,4"
                 Width="18"
                 Height="18"
@@ -38,7 +53,7 @@
                 RenderOptions.BitmapInterpolationMode="HighQuality"
             />
             <TextBlock
-                Grid.Column="1"
+                Grid.Column="2"
                 VerticalAlignment="Center"
                 IsHitTestVisible="False"
                 Text="{CompiledBinding I18N.App_Title}"

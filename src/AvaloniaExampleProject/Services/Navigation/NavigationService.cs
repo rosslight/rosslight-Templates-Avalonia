@@ -17,6 +17,8 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
 
     public ViewModelBase? CurrentPage => _currentEntry?.ViewModel;
 
+    public AppRoute? CurrentRoute => _currentEntry?.Route;
+
     public bool CanGoBack => _backStack.Count > 0;
 
     [ObservableProperty]
@@ -203,6 +205,7 @@ public sealed partial class NavigationService(INavigationRegistry navigationRegi
     private void NotifyNavigationChanged()
     {
         OnPropertyChanged(nameof(CurrentPage));
+        OnPropertyChanged(nameof(CurrentRoute));
         OnPropertyChanged(nameof(CanGoBack));
     }
 
