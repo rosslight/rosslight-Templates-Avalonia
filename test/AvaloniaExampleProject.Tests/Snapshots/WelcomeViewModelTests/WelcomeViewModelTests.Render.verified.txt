@@ -10,7 +10,7 @@
       },
       {
         Type: Button,
-        Command: AvaloniaExampleProject.ViewModels.WelcomeViewModel.ShowInputDialog,
+        Command: AvaloniaExampleProject.Features.Welcome.WelcomeViewModel.ShowInputDialog,
         Content: Click me!
       }
     ]
@@ -18,6 +18,6 @@
   FontFamily: Inter,
   DataContext: {
     I18N: {Scrubbed},
-    ShowInputDialogCommand: AvaloniaExampleProject.ViewModels.WelcomeViewModel.ShowInputDialog
+    ShowInputDialogCommand: AvaloniaExampleProject.Features.Welcome.WelcomeViewModel.ShowInputDialog
   }
 }

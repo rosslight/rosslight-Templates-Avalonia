@@ -1,7 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
-using AvaloniaExampleProject.ViewModels;
-using AvaloniaExampleProject.Views;
+using AvaloniaExampleProject.Features.Settings;
+using AvaloniaExampleProject.Features.Welcome;
+using AvaloniaExampleProject.Shell;
 using Darp.Utils.Avalonia;
 
 namespace AvaloniaExampleProject;
