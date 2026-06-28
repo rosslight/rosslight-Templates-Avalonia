@@ -15,7 +15,6 @@ namespace AvaloniaExampleProject.Tests.Features.Settings;
 
 public class SettingsViewModelTests
 {
-    private readonly IAssetsService _configAssetsService;
     private readonly ConfigService<MainConfig> _configurationService;
     private readonly ServiceProvider _services;
 
@@ -28,7 +27,6 @@ public class SettingsViewModelTests
             .AddSingleton(Serilog.Core.Logger.None)
             .AddLogging()
             .BuildServiceProvider();
-        _configAssetsService = _services.GetRequiredService<IAssetsFactory>().GetAssets(Bootstrapper.AppDataAssets);
         _configurationService = _services.GetRequiredService<ConfigService<MainConfig>>();
     }
 

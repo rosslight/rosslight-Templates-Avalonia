@@ -5,7 +5,6 @@ using AvaloniaExampleProject.Features.Dialogs;
 using AvaloniaExampleProject.Features.Settings;
 using AvaloniaExampleProject.Features.Welcome;
 using AvaloniaExampleProject.Services;
-using AvaloniaExampleProject.Shell;
 using Darp.Utils.Assets;
 using Darp.Utils.Configuration;
 using Microsoft.Extensions.DependencyInjection;

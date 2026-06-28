@@ -12,23 +12,13 @@ namespace AvaloniaExampleProject.Features.Dialogs;
 
 public sealed partial class DialogsViewModel : ViewModelBase
 {
-    private static readonly TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5);
+    private static readonly TimeSpan s_autoCloseDelay = TimeSpan.FromSeconds(5);
     private readonly IDialogService _dialogService;
-    private readonly Func<TimeSpan, CancellationToken, Task> _delay;
 
     public DialogsViewModel(Resources i18N, IDialogService dialogService)
-        : this(i18N, dialogService, Task.Delay) { }
-
-    internal DialogsViewModel(
-        Resources i18N,
-        IDialogService dialogService,
-        Func<TimeSpan, CancellationToken, Task> delay
-    )
     {
         I18N = i18N;
         _dialogService = dialogService;
-        _delay = delay;
-
         LastResult = I18N.Dialogs_Result_Empty;
         ShowcaseItems =
         [
@@ -127,7 +117,7 @@ public sealed partial class DialogsViewModel : ViewModelBase
     public IReadOnlyList<DialogShowcaseItem> ShowcaseItems { get; }
 
     [ObservableProperty]
-    public partial string LastResult { get; private set; } = string.Empty;
+    public partial string? LastResult { get; private set; }
 
     [RelayCommand]
     private async Task ShowMessageBoxDialog(CancellationToken cancellationToken)
@@ -268,20 +258,22 @@ public sealed partial class DialogsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowAutoCloseDialog(CancellationToken cancellationToken)
     {
-        using var dialog = _dialogService
+        DialogAwaitable<MessageBoxViewModel> dialog = _dialogService
             .CreateMessageBoxDialog(I18N.Dialogs_AutoClose_DialogTitle, I18N.Dialogs_AutoClose_DialogMessage)
             .ShowAsync(cancellationToken);
-        using var linkedSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, dialog.Token);
 
         try
         {
-            await _delay(AutoCloseDelay, linkedSource.Token);
-            dialog.Dispose();
+            await Task.Delay(s_autoCloseDelay, dialog.Token);
             LastResult = I18N.Dialogs_Result_ClosedByDisposal;
         }
-        catch (OperationCanceledException) when (dialog.IsClosed && !cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException)
         {
             LastResult = I18N.Dialogs_Result_Dismissed;
+        }
+        finally
+        {
+            dialog.Dispose();
         }
     }
 
@@ -320,7 +312,7 @@ public sealed partial class DialogsViewModel : ViewModelBase
         CancellationToken cancellationToken
     )
     {
-        await _delay(TimeSpan.FromMilliseconds(500), cancellationToken);
+        await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
         if (!string.Equals(content.ProjectName?.Trim(), "taken", StringComparison.OrdinalIgnoreCase))
             return true;
 

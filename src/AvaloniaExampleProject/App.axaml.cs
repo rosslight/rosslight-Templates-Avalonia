@@ -1,15 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using AvaloniaExampleProject.Services;
 using AvaloniaExampleProject.Shell;
+using Darp.Utils.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaExampleProject;
 
-public sealed class App : Avalonia.Application
+public sealed class App : Application
 {
     public App(IServiceProvider provider)
     {
@@ -48,6 +50,14 @@ public sealed class App : Avalonia.Application
             desktop.MainWindow = new MainWindow(Services);
             var accessor = (MainWindowStorageProviderAccessor)Services.GetRequiredService<IStorageProviderAccessor>();
             accessor.SetTopLevel(desktop.MainWindow);
+        }
+
+        // Apply Setup necessary for the design mode
+        // The MainWindow.LoadAsync method is not called in this path.
+        if (Design.IsDesignMode)
+        {
+            var configurationService = Services.GetRequiredService<ConfigService<MainConfig>>();
+            configurationService.LoadConfigAsync(() => new MainConfig()).GetAwaiter().GetResult();
         }
 
         base.OnFrameworkInitializationCompleted();
