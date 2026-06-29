@@ -20,7 +20,6 @@
 
     <UserControl.Resources>
         <system:Double x:Key="DialogsViewMaxWidth">1056</system:Double>
-        <system:Double x:Key="DialogsResultMaxWidth">1044</system:Double>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -33,39 +32,7 @@
                 TextWrapping="Wrap"
             />
 
-            <Border
-                MaxWidth="{StaticResource DialogsResultMaxWidth}"
-                HorizontalAlignment="Stretch"
-                Margin="0,20,0,22"
-                Padding="14"
-                CornerRadius="8"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-            >
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                    <controls:FASymbolIcon
-                        Width="28"
-                        Height="28"
-                        FontSize="20"
-                        Symbol="ShowResults"
-                        Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
-                    />
-                    <StackPanel Grid.Column="1" Spacing="2">
-                        <TextBlock
-                            Text="{CompiledBinding I18N.Dialogs_Result_Title}"
-                            Theme="{StaticResource BodyStrongTextBlockStyle}"
-                        />
-                        <SelectableTextBlock
-                            Text="{CompiledBinding LastResult}"
-                            TextWrapping="Wrap"
-                            Theme="{StaticResource CaptionTextBlockStyle}"
-                        />
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <WrapPanel ItemWidth="264" LineSpacing="12">
+            <WrapPanel ItemWidth="264" LineSpacing="12" Margin="0,20,0,0">
                 <vm:DialogShowcaseCard
                     Title="{CompiledBinding I18N.Dialogs_MessageBox_Title}"
                     Description="{CompiledBinding I18N.Dialogs_MessageBox_Description}"

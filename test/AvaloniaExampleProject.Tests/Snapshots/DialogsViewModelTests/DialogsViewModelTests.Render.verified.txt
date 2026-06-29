@@ -28,70 +28,10 @@
           Margin: 0,4,0,0
         },
         {
-          Type: Border,
-          Background: {
-            Type: SolidColorBrush,
-            Color: {
-              A: 179,
-              R: 255,
-              G: 255,
-              B: 255
-            }
-          },
-          BorderBrush: {
-            Type: SolidColorBrush,
-            Color: {
-              A: 15
-            }
-          },
-          BorderThickness: 1,
-          CornerRadius: 8,8,8,8,
-          Child: {
-            Type: Grid,
-            ColumnSpacing: 12.0,
-            Children: [
-              {
-                Type: FASymbolIcon,
-                Symbol: ShowResults,
-                FontSize: 20.0,
-                Foreground: {
-                  Type: SolidColorBrush
-                },
-                Width: 28.0,
-                Height: 28.0
-              },
-              {
-                Type: StackPanel,
-                Spacing: 2.0,
-                Children: [
-                  {
-                    Type: TextBlock,
-                    Text: Last result,
-                    Theme: {
-                      Type: ControlTheme
-                    }
-                  },
-                  {
-                    Type: SelectableTextBlock,
-                    Text: Run a demo to see the latest dialog result.,
-                    TextWrapping: Wrap,
-                    Theme: {
-                      Type: ControlTheme
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          Padding: 14,
-          MaxWidth: 1044.0,
-          Margin: 0,20,0,22,
-          HorizontalAlignment: Stretch
-        },
-        {
           Type: WrapPanel,
           LineSpacing: 12.0,
           ItemWidth: 264.0,
+          Margin: 0,20,0,0,
           Children: [
             {
               Type: DialogShowcaseCard
@@ -134,7 +74,6 @@
   FontFamily: Inter,
   DataContext: {
     I18N: {Scrubbed},
-    LastResult: Run a demo to see the latest dialog result.,
     ShowMessageBoxDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowMessageBoxDialog,
     ShowSelectableMessageBoxDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowSelectableMessageBoxDialog,
     ShowInputDialogCommand: AvaloniaExampleProject.Features.Dialogs.DialogsViewModel.ShowInputDialog,

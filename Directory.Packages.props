@@ -13,10 +13,10 @@
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.5" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="Darp.Utils.Avalonia" Version="2.1.1" />
-    <PackageVersion Include="Darp.Utils.Configuration" Version="2.1.1" />
-    <PackageVersion Include="Darp.Utils.Dialog.FluentAvalonia" Version="2.1.1" />
-    <PackageVersion Include="Darp.Utils.ResxSourceGenerator" Version="2.1.1" />
+    <PackageVersion Include="Darp.Utils.Avalonia" Version="2.1.2" />
+    <PackageVersion Include="Darp.Utils.Configuration" Version="2.1.2" />
+    <PackageVersion Include="Darp.Utils.Dialog.FluentAvalonia" Version="2.1.2" />
+    <PackageVersion Include="Darp.Utils.ResxSourceGenerator" Version="2.1.2" />
     <PackageVersion Include="DynamicData" Version="9.4.31" />
     <PackageVersion Include="FluentAvaloniaUI" Version="3.0.0" />
     <PackageVersion Include="MartinCostello.Logging.XUnit.v3" Version="0.7.1" />

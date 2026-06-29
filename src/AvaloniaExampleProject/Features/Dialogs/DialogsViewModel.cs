@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AvaloniaExampleProject.Assets;
+using AvaloniaExampleProject.Services;
 using AvaloniaExampleProject.Shell;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Darp.Utils.Dialog;
 using Darp.Utils.Dialog.DialogData;
@@ -13,18 +13,16 @@ public sealed partial class DialogsViewModel : ViewModelBase
 {
     private static readonly TimeSpan s_autoCloseDelay = TimeSpan.FromSeconds(5);
     private readonly IDialogService _dialogService;
+    private readonly INotificationService _notificationService;
 
-    public DialogsViewModel(Resources i18N, IDialogService dialogService)
+    public DialogsViewModel(Resources i18N, IDialogService dialogService, INotificationService notificationService)
     {
         I18N = i18N;
         _dialogService = dialogService;
-        LastResult = I18N.Dialogs_Result_Empty;
+        _notificationService = notificationService;
     }
 
     public Resources I18N { get; }
-
-    [ObservableProperty]
-    public partial string? LastResult { get; private set; }
 
     [RelayCommand]
     private async Task ShowMessageBoxDialog(CancellationToken cancellationToken)
@@ -33,7 +31,8 @@ public sealed partial class DialogsViewModel : ViewModelBase
             .CreateMessageBoxDialog(I18N.Dialogs_MessageBox_DialogTitle, I18N.Dialogs_MessageBox_DialogMessage)
             .ShowAsync(cancellationToken);
 
-        LastResult = result.IsPrimary ? I18N.Dialogs_Result_MessageAcknowledged : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary)
+            ShowResultNotification(I18N.Dialogs_Result_MessageAcknowledged);
     }
 
     [RelayCommand]
@@ -47,7 +46,8 @@ public sealed partial class DialogsViewModel : ViewModelBase
             )
             .ShowAsync(cancellationToken);
 
-        LastResult = result.IsPrimary ? I18N.Dialogs_Result_SelectableMessageClosed : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary)
+            ShowResultNotification(I18N.Dialogs_Result_SelectableMessageClosed);
     }
 
     [RelayCommand]
@@ -58,10 +58,8 @@ public sealed partial class DialogsViewModel : ViewModelBase
             .ConfigureInput(I18N.Dialogs_Input_Watermark, validateInput: ValidateDisplayName)
             .ShowAsync(cancellationToken);
 
-        LastResult =
-            result.IsPrimary && result.TryGetResultData(out string? displayName)
-                ? I18N.FormatDialogs_Result_DisplayName(displayName)
-                : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary && result.TryGetResultData(out string? displayName))
+            ShowResultNotification(I18N.FormatDialogs_Result_DisplayName(displayName));
     }
 
     [RelayCommand]
@@ -73,10 +71,8 @@ public sealed partial class DialogsViewModel : ViewModelBase
             .ConfigurePasswordStep(I18N.Dialogs_UsernamePassword_PasswordMessage, ValidatePassword)
             .ShowAsync(cancellationToken);
 
-        LastResult =
-            result.IsPrimary && result.TryGetResultData(out UsernamePasswordData? data)
-                ? I18N.FormatDialogs_Result_SignedIn(data.Username)
-                : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary && result.TryGetResultData(out UsernamePasswordData? data))
+            ShowResultNotification(I18N.FormatDialogs_Result_SignedIn(data.Username));
     }
 
     [RelayCommand]
@@ -106,14 +102,13 @@ public sealed partial class DialogsViewModel : ViewModelBase
             .ShowAsync(cancellationToken);
 
         if (!result.TryGetResultData(out ProjectDialogResult? project))
-        {
-            LastResult = I18N.Dialogs_Result_Dismissed;
             return;
-        }
 
-        LastResult = result.IsSecondary
-            ? I18N.FormatDialogs_Result_ProjectDraftSaved(project.Name)
-            : I18N.FormatDialogs_Result_ProjectSaved(project.Name);
+        ShowResultNotification(
+            result.IsSecondary
+                ? I18N.FormatDialogs_Result_ProjectDraftSaved(project.Name)
+                : I18N.FormatDialogs_Result_ProjectSaved(project.Name)
+        );
     }
 
     [RelayCommand]
@@ -172,12 +167,10 @@ public sealed partial class DialogsViewModel : ViewModelBase
         try
         {
             await Task.Delay(s_autoCloseDelay, dialog.Token);
-            LastResult = I18N.Dialogs_Result_ClosedByDisposal;
+            ShowResultNotification(I18N.Dialogs_Result_ClosedByDisposal);
         }
         catch (OperationCanceledException)
-        {
-            LastResult = I18N.Dialogs_Result_Dismissed;
-        }
+        { }
         finally
         {
             dialog.Dispose();
@@ -194,15 +187,21 @@ public sealed partial class DialogsViewModel : ViewModelBase
             .SetPrimaryButton(I18N.Dialogs_DeleteButton)
             .ShowAsync(cancellationToken);
 
-        LastResult = result.IsPrimary ? I18N.Dialogs_Result_DeleteConfirmed : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary)
+            ShowResultNotification(I18N.Dialogs_Result_DeleteConfirmed);
     }
 
     private void SetProjectResult(ContentDialogResult<ProjectDialogViewModel> result, string prefix)
     {
-        LastResult =
-            result.IsPrimary && result.TryGetResultData(out ProjectDialogResult? project)
-                ? I18N.FormatDialogs_Result_Project(prefix, project.Name, project.Template, project.OpenAfterCreate)
-                : I18N.Dialogs_Result_Dismissed;
+        if (result.IsPrimary && result.TryGetResultData(out ProjectDialogResult? project))
+            ShowResultNotification(
+                I18N.FormatDialogs_Result_Project(prefix, project.Name, project.Template, project.OpenAfterCreate)
+            );
+    }
+
+    private void ShowResultNotification(string result)
+    {
+        _notificationService.ShowInformation(I18N.Dialogs_Result_Title, result);
     }
 
     private bool ValidateReservedProjectName(ProjectDialogViewModel content)
